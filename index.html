@@ -23,7 +23,7 @@
                     colors: {
                         gold: { 300: '#E6C981', 400: '#D4AF37', 500: '#AA8529', 600: '#8A6A1C' },
                         dark: { 900: '#0A0A0A', 800: '#141414', 700: '#1F1F1F', 600: '#2E2E2E' },
-                        element: { wood: '#4ade80', fire: '#f87171', earth: '#D4AF37', metal: '#e5e7eb', water: '#60a5fa' }
+                        element: { wood: '#4ade80', fire: '#f87171', earth: '#b45309', metal: '#D4AF37', water: '#60a5fa' }
                     }
                 }
             }
@@ -81,8 +81,8 @@
         
         .element-wood { color: #4ade80; } 
         .element-fire { color: #f87171; } 
-        .element-earth { color: #D4AF37; } 
-        .element-metal { color: #e5e7eb; } 
+        .element-earth { color: #b45309; } 
+        .element-metal { color: #D4AF37; } 
         .element-water { color: #60a5fa; } 
 
         .percent-bar-segment { height: 10px; transition: width 1s ease-in-out; }
@@ -213,6 +213,20 @@
                     <div class="bazi-cell" id="branch-day"></div>
                     <div class="bazi-cell" id="branch-month"></div>
                     <div class="bazi-cell" id="branch-year"></div>
+                </div>
+
+                <!-- SECTION: Table Explanation (Accordion) -->
+                <div class="mt-6 border-t border-dark-600 pt-4">
+                    <button onclick="app.toggleAccordion('table-explain')" class="w-full flex items-center justify-between text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors bg-dark-800/50 p-3 rounded-lg border border-dark-600 hover:border-gold-500/50 focus:outline-none">
+                        <span class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            คำอธิบายตารางปาจื้อ (ฉบับย่อ)
+                        </span>
+                        <svg id="icon-table-explain" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-table-explain" class="hidden mt-4 text-sm text-gray-300">
+                        <!-- Injected via JS -->
+                    </div>
                 </div>
             </div>
 
@@ -384,7 +398,13 @@
 
     <script>
         const LOCAL_STORAGE_KEY = 'soul_element_history';
-        const APP_URL = window.location.origin + window.location.pathname; // Used for QR
+        
+        // --- กำหนด URL ของระบบเมื่อนำไปขึ้น Vercel (สำคัญมาก) ---
+        // เปลี่ยนค่าในเครื่องหมายคำพูดเป็น URL ของคุณ เช่น 'https://soul-element.vercel.app'
+        // หากไม่ใส่ลิงก์จริง มือถือที่สแกนจะไม่สามารถเข้าถึงหน้า Preview ชั่วคราวนี้ได้
+        const DEPLOYED_URL = ''; 
+        const APP_URL = DEPLOYED_URL || (window.location.origin + window.location.pathname); 
+        
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxH8Qaha-B_LJ9QaJtXNUDsMFAz6VVHGSXDrnPixm9wCfLRZVn84jhrLm8k05donmbt/exec';
         
         const app = {
@@ -398,7 +418,7 @@
                 itemsPerPage: 20
             },
 
-            // ข้อมูลธาตุและสี/อัญมณี
+            // ข้อมูลธาตุและสี/อัญมณี (ปรับสีตามธาตุ)
             elements: {
                 'Wood': { th: 'ไม้', colorClass: 'element-wood', hex: '#4ade80', icon: '🌳', 
                           colors: [{n:'เขียวขี้ม้า', h:'#4b5320'}, {n:'เขียวมิ้นต์', h:'#98FF98'}, {n:'เขียวมะนาว', h:'#32CD32'}], 
@@ -418,7 +438,7 @@
                           domDesc: 'ผู้ที่มีธาตุไฟเด่น จะมีความกระตือรือร้นสูง อบอุ่น เปิดเผย ชอบช่วยเหลือผู้อื่น รักความยุติธรรม แต่ก็มักจะใจร้อนและมีอารมณ์รุนแรงได้ง่าย',
                           domAdvice: 'ควรฝึกสมาธิและควบคุมอารมณ์ให้เยือกเย็นลง การคิดก่อนพูดและทำจะช่วยลดปัญหาความขัดแย้งได้',
                           misDesc: 'คุณมีธาตุไฟน้อย อาจทำให้ขาดความกระตือรือร้น รู้สึกเนือยๆ ขาดแพสชั่นในการทำสิ่งต่างๆ บางครั้งอาจดูเย็นชาในสายตาผู้อื่น' },
-                'Earth': { th: 'ดิน', colorClass: 'element-earth', hex: '#D4AF37', icon: '⛰️',
+                'Earth': { th: 'ดิน', colorClass: 'element-earth', hex: '#b45309', icon: '⛰️',
                           colors: [{n:'เหลือง', h:'#FFD700'}, {n:'น้ำตาล', h:'#8B4513'}, {n:'ครีม', h:'#FFFDD0'}], 
                           luckyColors: [{n:'เหลือง', h:'#facc15'}, {n:'น้ำตาล', h:'#78350f'}, {n:'แดง', h:'#f87171'}],
                           gem: 'บุษราคัม (Yellow Sapphire)',
@@ -427,7 +447,7 @@
                           domDesc: 'ผู้ที่มีธาตุดินเด่น เปรียบเสมือนผืนดินที่มั่นคง แข็งแกร่ง มีความอดทนสูง เป็นคนรักษาสัญญา น่าเชื่อถือ แต่ไม่ชอบการเปลี่ยนแปลงและอาจจะดื้อเงียบ',
                           domAdvice: 'ควรกล้าที่จะลองสิ่งใหม่ๆ และรับการเปลี่ยนแปลงบ้าง การออกจาก Comfort Zone จะนำพาสิ่งดีๆ มาให้',
                           misDesc: 'คุณมีธาตุดินน้อย อาจทำให้ขาดความมั่นคงในจิตใจ โลเล เปลี่ยนใจง่าย ขาดความหนักแน่นในการตัดสินใจเรื่องสำคัญ' },
-                'Metal': { th: 'ทอง', colorClass: 'element-metal', hex: '#e5e7eb', icon: '⚔️',
+                'Metal': { th: 'ทอง', colorClass: 'element-metal', hex: '#D4AF37', icon: '⚔️',
                           colors: [{n:'เงิน', h:'#C0C0C0'}, {n:'ขาว', h:'#FFFFFF'}, {n:'เทา', h:'#808080'}], 
                           luckyColors: [{n:'ขาว', h:'#ffffff'}, {n:'เงิน', h:'#d1d5db'}, {n:'เหลือง', h:'#facc15'}],
                           gem: 'เพชร (Diamond)',
@@ -516,6 +536,13 @@
                     this.state.currentPage = 1;
                     this.renderHistoryTable();
                 });
+
+                // ตรวจสอบ URL Parameter ว่ามีการสแกน QR Code เข้ามาหรือไม่
+                const urlParams = new URLSearchParams(window.location.search);
+                const sharedId = urlParams.get('id');
+                if (sharedId) {
+                    this.fetchSharedResult(sharedId);
+                }
             },
 
             // ลบข้อมูลที่เก่ากว่า 7 วัน (ตาม Requirement)
@@ -656,6 +683,9 @@
                     <div class="text-[10px] text-gray-400">ธาตุ${dmEle.th}${dmPolTh}</div>
                 `;
 
+                // --- สร้างคำอธิบายตารางปาจื้อแบบ Dynamic (แก้ไขบั๊ก dmEleData) ---
+                this.generateTableExplanation(data);
+
                 // Day Master Details
                 const dm = data.analysis.dayMaster;
                 document.getElementById('dm-icon').innerText = dmEle.icon;
@@ -710,36 +740,44 @@
                 `).join('');
 
                 // Analysis Charts & Percents
+                // จัดเรียงแบบคงที่ตามภาพ: ไม้ -> ไฟ -> ดิน -> ทอง -> น้ำ
                 const order = ['Wood', 'Fire', 'Earth', 'Metal', 'Water'];
-                const sortedPercents = order.map(elName => data.analysis.elements.find(e => e.name === elName) || {name:elName, value:0});
-                const sortedByValue = [...sortedPercents].sort((a,b) => b.value - a.value);
+                
+                // สำหรับ Radar chart ส่งค่าเปอร์เซ็นต์ตามลำดับคงที่
+                const orderedPercents = order.map(elName => data.analysis.elements.find(e => e.name === elName) || {name:elName, value:0});
 
                 // Radar
                 if (this.state.chartInstance) this.state.chartInstance.destroy();
                 const options = {
-                    series: [{ name: 'พลังงาน (%)', data: sortedPercents.map(e => e.value) }],
+                    series: [{ name: 'พลังงาน (%)', data: orderedPercents.map(e => e.value) }],
                     chart: { type: 'radar', height: 320, toolbar: { show: false }, background: 'transparent' },
-                    labels: sortedPercents.map(e => `ธาตุ${e.th}`),
+                    labels: orderedPercents.map(e => `ธาตุ${e.th}`),
                     stroke: { width: 2, colors: ['#D4AF37'] },
                     fill: { opacity: 0.3, colors: ['#D4AF37'] },
                     markers: { size: 4, colors: ['#fff'], strokeColors: '#D4AF37' },
                     yaxis: { show: false, min: 0 },
-                    xaxis: { labels: { style: { colors: ['#4ade80', '#f87171', '#D4AF37', '#e5e7eb', '#60a5fa'], fontSize: '13px', fontFamily: 'Noto Sans Thai', fontWeight: 'bold' } } },
+                    // ปรับสีในเรดาร์ตามธาตุจริง
+                    xaxis: { labels: { style: { colors: ['#4ade80', '#f87171', '#b45309', '#D4AF37', '#60a5fa'], fontSize: '13px', fontFamily: 'Noto Sans Thai', fontWeight: 'bold' } } },
                     plotOptions: { radar: { polygons: { strokeColors: '#333', connectorColors: '#333' } } },
                     theme: { mode: 'dark' }
                 };
                 this.state.chartInstance = new ApexCharts(document.querySelector("#chart-container"), options);
                 this.state.chartInstance.render();
 
-                // Percent Bar
+                // Percent Bar (จัดเรียงคงที่: ไม้ -> ไฟ -> ดิน -> ทอง -> น้ำ)
                 const pBar = document.getElementById('element-percent-bar');
                 const pLabels = document.getElementById('element-percent-labels');
                 pBar.innerHTML = ''; pLabels.innerHTML = '';
-                sortedPercents.forEach(e => {
+                orderedPercents.forEach(e => {
                     const eData = this.elements[e.name];
-                    pBar.innerHTML += `<div class="percent-bar-segment" style="width: ${e.value}%; background-color: ${eData.hex}"></div>`;
+                    if(e.value > 0) {
+                        pBar.innerHTML += `<div class="percent-bar-segment" style="width: ${e.value}%; background-color: ${eData.hex}"></div>`;
+                    }
                     pLabels.innerHTML += `<div class="text-center w-1/5"><div class="font-bold" style="color:${eData.hex}">${e.value}%</div><div>${eData.th}</div></div>`;
                 });
+
+                // สำหรับการแสดงธาตุหลักและธาตุที่ควรเสริม ให้เรียงลำดับจากมากไปน้อย
+                const sortedByValue = [...orderedPercents].sort((a,b) => b.value - a.value);
 
                 // แยกธาตุหลัก (>= 20%) และ ธาตุที่ควรเสริม (< 20%)
                 const dominantElements = sortedByValue.filter(e => e.value >= 20);
@@ -827,6 +865,103 @@
                 } else {
                      misContainer.innerHTML = `<p class="text-sm text-gray-400 text-center py-4 bg-dark-800/50 rounded-lg border border-dark-600">ดวงชะตาของคุณมีธาตุค่อนข้างสมดุล (ไม่มีธาตุใดต่ำกว่า 20%)</p>`;
                 }
+            },
+
+            // สร้างเนื้อหาอธิบายตารางปาจื้อแบบ Dynamic (แก้ไขบั๊ก ReferenceError)
+            generateTableExplanation(data) {
+                const dm = data.analysis.dayMaster;
+                const dmEle = this.elements[dm.element];
+                const dmMap = this.stemsMap[dm.char];
+                const polarityTh = dm.polarity === '+' ? 'หยาง' : 'หยิน';
+                const dmTitle = `ธาตุ${dmEle.th}${polarityTh}`;
+                const dmArchetype = dmMap.text.split('(')[1].replace(')','');
+
+                // หาธาตุที่เด่นที่สุด
+                const sortedElements = [...data.analysis.elements].sort((a,b) => b.value - a.value);
+                const domEl = sortedElements[0];
+                const domEleData = this.elements[domEl.name];
+
+                // ความสัมพันธ์ระหว่าง Day Master กับ ธาตุเด่น
+                const elementsArr = ['Wood', 'Fire', 'Earth', 'Metal', 'Water'];
+                const dmIdx = elementsArr.indexOf(dm.element);
+                const domIdx = elementsArr.indexOf(domEl.name);
+
+                let relationTxt = ""; let relationPros = ""; let relationCons = "";
+                if (dmIdx === domIdx) {
+                    relationTxt = `ธาตุ${domEleData.th} (ธาตุเดียวกัน) ส่งเสริมพลังตัวตน`;
+                    relationPros = "มีความมั่นใจ เป็นตัวของตัวเองสูง ยืนหยัดในจุดยืน ชัดเจนในเป้าหมาย";
+                    relationCons = "อาจจะดื้อรั้น ไม่ฟังใคร ขาดความยืดหยุ่น ยึดติดกับความคิดตัวเอง";
+                } else if ((dmIdx + 1) % 5 === domIdx) {
+                    relationTxt = `ธาตุ${dmEle.th} ก่อเกิด ธาตุ${domEleData.th} (การถ่ายเทพลัง/สร้างสรรค์)`;
+                    relationPros = "มีไอเดียสร้างสรรค์ ชอบลงมือทำ ชอบแสดงออก มีความสามารถในการสร้างสิ่งใหม่ๆ";
+                    relationCons = "ใช้พลังงานเยอะ อาจจะเหนื่อยง่าย โฟกัสหลายอย่างจนทำไม่เสร็จ พลังงานถูกบั่นทอน";
+                } else if ((dmIdx + 2) % 5 === domIdx) {
+                    relationTxt = `ธาตุ${dmEle.th} พิฆาต ธาตุ${domEleData.th} (ธาตุโชคลาภ/การจัดการ)`;
+                    relationPros = "มีเป้าหมายเรื่องความสำเร็จชัดเจน จัดการเก่ง มองเห็นโอกาส มองการณ์ไกล";
+                    relationCons = "ทำงานหนัก เครียดง่าย หมกมุ่นกับผลลัพธ์จนลืมดูแลตัวเอง";
+                } else if ((dmIdx + 3) % 5 === domIdx) {
+                    relationTxt = `ธาตุ${domEleData.th} พิฆาต ธาตุ${dmEle.th} (ธาตุอำนาจ/กฎเกณฑ์)`;
+                    relationPros = "มีความรับผิดชอบสูง มีระเบียบวินัย เป็นผู้นำ จัดการระบบได้ดี";
+                    relationCons = "แบกรับภาระเยอะ กดดันตัวเอง เครียดสะสม รู้สึกเหมือนถูกตีกรอบ";
+                } else if ((dmIdx + 4) % 5 === domIdx) {
+                    relationTxt = `ธาตุ${domEleData.th} ก่อเกิด ธาตุ${dmEle.th} (ธาตุส่งเสริม/ทรัพยากร)`;
+                    relationPros = "มีความคิดลึกซึ้ง ชอบเรียนรู้ มีผู้สนับสนุน ข้อมูลแน่น";
+                    relationCons = "คิดเยอะเกินไป ทฤษฎีเยอะแต่ลงมือทำน้อย ขี้กังวล";
+                }
+
+                const explanationHtml = `
+                    <div class="space-y-6 pt-2 pb-4">
+                        <div>
+                            <h4 class="text-gold-400 font-bold mb-2 text-base">จุดสำคัญที่สุด: Day Master</h4>
+                            <p class="text-sm">Day Master ของคุณคือ:</p>
+                            <div class="text-xl font-bold text-white my-2 ${dmEle.colorClass}">${dm.char} ${dm.pinyin} = "${dmTitle}" ${dmEle.icon}</div>
+                            <p class="text-xs text-gray-400 mb-3">เปรียบเหมือน: ${dmArchetype}</p>
+                            <div class="bg-dark-800 p-4 rounded-xl border border-dark-600">
+                                <h5 class="text-white font-bold text-sm mb-2">บุคลิกพื้นฐานของ "${dmTitle}"</h5>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                                    ${dmMap.traits.map(t => `<li class="flex items-center"><span class="text-gold-500 mr-2">•</span> ${t}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-gold-400 font-bold mb-2 text-base">สิ่งที่เห็นชัดในดวงนี้</h4>
+                            <p class="mb-2 text-sm text-gray-300">ในดวงชะตามี <span class="${domEleData.colorClass} font-bold">"ธาตุ${domEleData.th}"</span> เยอะมาก (${domEl.value}%)</p>
+                            <div class="bg-dark-800 p-4 rounded-xl border border-dark-600">
+                                <p class="font-bold text-white mb-3 text-sm border-b border-dark-600 pb-2">อิทธิพลของ ${relationTxt}</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <span class="text-green-400 font-bold text-xs">ข้อดี:</span>
+                                        <p class="text-xs text-gray-300 mt-1 leading-relaxed">${relationPros}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-red-400 font-bold text-xs">ข้อควรระวัง:</span>
+                                        <p class="text-xs text-gray-300 mt-1 leading-relaxed">${relationCons}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-gold-400 font-bold mb-2 text-base">ภาพรวมดวงนี้แบบง่าย</h4>
+                            <div class="bg-dark-800 p-4 rounded-xl border border-gold-500/30 text-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gold-500/5 pointer-events-none"></div>
+                                <p class="font-bold text-gold-300 mb-2 relative z-10">"${dmArchetype} ที่ได้รับพลังจากธาตุ${domEleData.th}"</p>
+                                <p class="text-xs text-gray-300 relative z-10 leading-relaxed">
+                                    <span class="text-white font-bold">บทเรียนชีวิต:</span> 
+                                    พยายามรักษาจุดเด่นของ ${dmTitle} ไว้ และระวังไม่ให้อิทธิพลของธาตุ${domEleData.th} ที่มีมากเกินไปมาสร้างความกดดันให้ชีวิต
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // รีเซ็ตสถานะการแสดงผล
+                const contentDiv = document.getElementById('content-table-explain');
+                const icon = document.getElementById('icon-table-explain');
+                contentDiv.innerHTML = explanationHtml;
+                contentDiv.classList.add('hidden');
+                if(icon) icon.style.transform = 'rotate(0deg)';
             },
 
             // ฟังก์ชันสำหรับเปิด/ปิด Accordion ของธาตุต่างๆ
@@ -986,6 +1121,48 @@
                 })
             },
 
+            // --- ดึงข้อมูลสำหรับการแชร์ / QR Scan ---
+            async fetchSharedResult(id) {
+                Swal.fire({ title: 'กำลังโหลดข้อมูลผลดวง...', background: '#141414', color: '#D4AF37', didOpen: () => { Swal.showLoading(); } });
+                
+                // ค้นหาในประวัติเครื่องตัวเองก่อน
+                let foundData = this.state.history.find(item => item.id === id);
+                
+                // ถ้าไม่เจอให้ดึงจาก Google Sheet
+                if (!foundData) {
+                    try {
+                        const response = await fetch(`${GAS_API_URL}?action=getResult&id=${id}`);
+                        if(response.ok) {
+                            const json = await response.json();
+                            if(json && json.data) foundData = json.data;
+                        }
+                    } catch (e) {
+                        console.error('Fetch shared result failed', e);
+                    }
+                }
+
+                if (foundData) {
+                    this.state.currentResult = foundData;
+                    this.renderResult(foundData);
+                    
+                    // ซ่อนเมนูนำทางและปุ่มที่ไม่จำเป็นสำหรับผู้ชม (โหมดอ่านอย่างเดียว)
+                    const nav = document.querySelector('nav');
+                    if(nav) nav.style.display = 'none';
+                    const btnBack = document.getElementById('btn-back');
+                    if(btnBack) btnBack.style.display = 'none';
+                    const btnQr = document.getElementById('btn-qr');
+                    if(btnQr) btnQr.style.display = 'none';
+                    
+                    Swal.close();
+                    this.navigate('result');
+                } else {
+                    Swal.fire({ icon: 'error', title: 'ไม่พบข้อมูล', text: 'ข้อมูลอาจหมดอายุหรือถูกลบไปแล้ว', background: '#141414', color: '#fff' })
+                    .then(() => {
+                        window.location.href = window.location.pathname; // กลับหน้าหลักหากไม่พบข้อมูล
+                    });
+                }
+            },
+
             // --- 58mm QR Receipt Generator ---
             generateReceiptQR() {
                 const data = this.state.currentResult;
@@ -1067,31 +1244,36 @@
                 const polarity = data.analysis.dayMaster.polarity === '+' ? 'หยาง' : 'หยิน';
                 ctx.fillText(`ธาตุประจำตัว: ธาตุ${dmEle.th}${polarity}`, 30, startY + lh*3);
 
-                // Get QR image data from the DOM element we rendered
-                const qrImg = document.querySelector('#qrcode img');
-                if (qrImg && qrImg.src) {
-                    const img = new Image();
-                    img.onload = () => {
-                        const qrSize = 200;
-                        const qrX = (width - qrSize) / 2;
-                        const qrY = startY + lh*4;
-                        ctx.drawImage(img, qrX, qrY, qrSize, qrSize);
+                // ดึงภาพ QR Code จาก Canvas โดยตรง (แก้ปัญหาโหลดไม่ทันและอ่านไม่ออก)
+                const qrCanvasDOM = document.querySelector('#qrcode canvas');
+                if (qrCanvasDOM) {
+                    const qrSize = 200;
+                    const qrX = (width - qrSize) / 2;
+                    const qrY = startY + lh*4;
+                    
+                    // เติมขอบขาวรอบ QR Code (Quiet Zone) เพื่อให้กล้องจับโฟกัสง่ายขึ้น
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
+                    ctx.fillStyle = "#000000";
+                    
+                    // วาดรูป QR
+                    ctx.drawImage(qrCanvasDOM, qrX, qrY, qrSize, qrSize);
                         
-                        // Footer text
-                        ctx.textAlign = "center";
-                        ctx.font = "14px 'Noto Sans Thai', sans-serif";
-                        ctx.fillText("สแกนเพื่อดูคำทำนายฉบับเต็ม", width/2, qrY + qrSize + 30);
-                        ctx.font = "12px 'Noto Sans Thai', sans-serif";
-                        ctx.fillStyle = "#666666";
-                        ctx.fillText("ผลการทำนายมีอายุ 7 วัน", width/2, qrY + qrSize + 50);
+                    // Footer text
+                    ctx.textAlign = "center";
+                    ctx.font = "14px 'Noto Sans Thai', sans-serif";
+                    ctx.fillText("สแกนเพื่อดูคำทำนายฉบับเต็ม", width/2, qrY + qrSize + 30);
+                    ctx.font = "12px 'Noto Sans Thai', sans-serif";
+                    ctx.fillStyle = "#666666";
+                    ctx.fillText("ผลการทำนายมีอายุ 7 วัน", width/2, qrY + qrSize + 50);
 
-                        // Trigger download
-                        const link = document.createElement('a');
-                        link.download = `bazi_${data.customer.name}.png`;
-                        link.href = canvas.toDataURL('image/png');
-                        link.click();
-                    };
-                    img.src = qrImg.src;
+                    // Trigger download
+                    const link = document.createElement('a');
+                    link.download = `bazi_${data.customer.name}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                } else {
+                    Swal.fire('ข้อผิดพลาด', 'ระบบสร้าง QR Code ไม่สำเร็จ โปรดลองใหม่อีกครั้ง', 'error');
                 }
             }
         };

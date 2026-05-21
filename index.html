@@ -299,7 +299,7 @@
                 
                 <!-- Percent Bar -->
                 <div class="w-full flex rounded-full overflow-hidden h-3 mb-2" id="element-percent-bar"></div>
-                <div class="flex justify-between text-xs text-gray-400 w-full" id="element-percent-labels"></div>
+                <div class="flex text-xs text-gray-400 w-full" id="element-percent-labels"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -776,16 +776,26 @@
                 // สำหรับการแสดงธาตุหลักและธาตุที่ควรเสริม รวมถึง Percent Bar ให้เรียงลำดับจากมากไปน้อย
                 const sortedByValue = [...orderedPercents].sort((a,b) => b.value - a.value);
 
-                // Percent Bar (จัดเรียงจากมากไปน้อย)
+                // Percent Bar (จัดเรียงจากมากไปน้อย ตามเปอร์เซ็นต์จริง ไม่ฟิกขนาดกล่อง)
                 const pBar = document.getElementById('element-percent-bar');
                 const pLabels = document.getElementById('element-percent-labels');
                 pBar.innerHTML = ''; pLabels.innerHTML = '';
+                
+                // เปลี่ยน class ให้ flex ไม่แยกห่างกันเท่าๆ กัน (ลบ justify-between หรือใช้โครงสร้างใหม่)
+                pLabels.className = "flex text-xs text-gray-400 w-full"; 
+
                 sortedByValue.forEach(e => {
                     const eData = this.elements[e.name];
                     if(e.value > 0) {
                         pBar.innerHTML += `<div class="percent-bar-segment" style="width: ${e.value}%; background-color: ${eData.hex}"></div>`;
+                        // กำหนดความกว้างของป้ายกำกับให้เปอร์เซ็นต์ตรงกับแท่งกราฟด้านบน
+                        pLabels.innerHTML += `
+                            <div class="text-center relative" style="width: ${e.value}%;">
+                                <div class="font-bold text-[10px] md:text-sm" style="color:${eData.hex}">${e.value}%</div>
+                                <div class="text-[9px] md:text-xs">${eData.th}</div>
+                            </div>
+                        `;
                     }
-                    pLabels.innerHTML += `<div class="text-center flex-1"><div class="font-bold" style="color:${eData.hex}">${e.value}%</div><div>${eData.th}</div></div>`;
                 });
 
                 // แยกธาตุหลัก (>= 20%) และ ธาตุที่ควรเสริม (< 20%)

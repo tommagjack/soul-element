@@ -89,16 +89,25 @@
 
         .percent-bar-segment { height: 10px; transition: width 1s ease-in-out; }
 
+        @page { size: A4; margin: 12mm; }
         @media print {
             body { background: white !important; color: black !important; }
             .no-print { display: none !important; }
-            .glass-panel { background: white !important; border: 1px solid #ccc !important; box-shadow: none !important; color: black !important; }
+            .glass-panel { 
+                background: white !important; 
+                border: 1px solid #ddd !important; 
+                box-shadow: none !important; 
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 1.5rem !important;
+            }
+            .text-white, .text-gray-300, .text-gray-400, .text-gray-500 { color: #333 !important; }
+            .bg-dark-800, .bg-dark-900, .bg-dark-700 { background-color: #f9fafb !important; border-color: #e5e7eb !important; }
             .gold-gradient-text { background: none !important; color: black !important; -webkit-text-fill-color: black !important; }
-            .bazi-cell { background: white !important; color: black !important; }
-            .bazi-header { background: #f0f0f0 !important; color: black !important; border-bottom: 1px solid #ccc !important;}
-            .bazi-grid { background: #ccc !important; border: 1px solid #000 !important; }
-            #chart-container { filter: invert(1) hue-rotate(180deg); }
-            .print-bg-dark { background-color: #f0f0f0 !important; }
+            .bazi-grid { background: #f3f4f6 !important; border: 1px solid #d1d5db !important; break-inside: avoid; }
+            .bazi-header { background: #e5e7eb !important; color: #000 !important; border-bottom: 1px solid #d1d5db !important;}
+            .bazi-cell { background: white !important; }
+            #chart-container { filter: invert(1) hue-rotate(180deg); break-inside: avoid; }
         }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -186,7 +195,11 @@
                     กลับ
                 </button>
                 <div class="flex space-x-3">
-                    <button onclick="app.generateReceiptQR()" class="btn-outline px-4 py-2 rounded-lg text-sm flex items-center" id="btn-qr">
+                    <button onclick="window.print()" class="btn-outline px-4 py-2 rounded-lg text-sm flex items-center" id="btn-print">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        พิมพ์ A4
+                    </button>
+                    <button onclick="app.generateReceiptQR()" class="btn-gold px-4 py-2 rounded-lg text-sm flex items-center" id="btn-qr">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
                         สร้าง QR Code
                     </button>
@@ -194,10 +207,15 @@
             </div>
 
             <!-- SECTION: Header -->
-            <div class="text-center mb-8">
+            <div class="text-center mb-8 relative">
                 <h2 class="text-3xl font-bold gold-gradient-text mb-2">ข้อมูลปาจื้อของฉัน</h2>
                 <p class="text-gray-400">คุณ <span id="res-name" class="font-bold text-white"></span></p>
                 <p class="text-sm text-gray-500 mt-1"><span id="res-dob"></span> | <span id="res-time"></span> | <span id="res-gender"></span></p>
+                
+                <div id="countdown-container" class="mt-4 inline-flex items-center justify-center bg-dark-800/80 border border-gold-500/30 rounded-full px-5 py-2 text-sm text-gold-300 shadow-lg no-print">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>ข้อมูลหมดอายุใน: <span id="countdown-timer" class="font-bold ml-1 text-white tracking-wider w-[200px] inline-block text-left">กำลังคำนวณ...</span></span>
+                </div>
             </div>
 
             <!-- SECTION: BaZi Table -->
@@ -406,7 +424,6 @@
         
         // --- กำหนด URL ของระบบเมื่อนำไปขึ้น Vercel (สำคัญมาก) ---
         // เปลี่ยนค่าในเครื่องหมายคำพูดเป็น URL ของคุณ เช่น 'https://soul-element.vercel.app'
-        // หากไม่ใส่ลิงก์จริง มือถือที่สแกนจะไม่สามารถเข้าถึงหน้า Preview ชั่วคราวนี้ได้
         const DEPLOYED_URL = ''; 
         const APP_URL = DEPLOYED_URL || (window.location.origin + window.location.pathname); 
         
@@ -419,6 +436,7 @@
                 history: [],
                 chartInstance: null,
                 qrInstance: null,
+                countdownInterval: null,
                 currentPage: 1,
                 itemsPerPage: 20
             },
@@ -570,6 +588,7 @@
             },
 
             navigate(viewId) {
+                if (this.state.countdownInterval) clearInterval(this.state.countdownInterval);
                 document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
                 document.getElementById(`view-${viewId}`).classList.remove('hidden');
                 this.state.currentView = viewId;
@@ -695,6 +714,9 @@
 
                 // --- สร้างคำอธิบายตารางปาจื้อแบบ Dynamic ---
                 this.generateTableExplanation(data);
+
+                // เริ่มจับเวลานับถอยหลัง
+                this.startCountdown(data);
 
                 // Day Master Details
                 const dm = data.analysis.dayMaster;
@@ -998,6 +1020,37 @@
                 }
             },
 
+            startCountdown(data) {
+                if (this.state.countdownInterval) clearInterval(this.state.countdownInterval);
+                const timerEl = document.getElementById('countdown-timer');
+                if (!timerEl) return;
+                
+                const calcDate = new Date(data.calcDate).getTime();
+                const expiryDate = calcDate + (7 * 24 * 60 * 60 * 1000);
+
+                const updateTimer = () => {
+                    const now = new Date().getTime();
+                    const distance = expiryDate - now;
+
+                    if (distance <= 0) {
+                        clearInterval(this.state.countdownInterval);
+                        timerEl.innerHTML = "<span class='text-red-500'>หมดอายุแล้ว</span>";
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    timerEl.innerText = `${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+                    timerEl.classList.remove('text-red-500');
+                };
+
+                updateTimer();
+                this.state.countdownInterval = setInterval(updateTimer, 1000);
+            },
+
             saveData(resultData) {
                 // Add to history and save locally
                 this.state.history.unshift(resultData);
@@ -1075,8 +1128,9 @@
                             <td class="p-4 text-center text-gray-500">${actualIndex}</td>
                             <td class="p-4 whitespace-nowrap">${date}</td>
                             <td class="p-4 font-medium text-white">${item.customer.name}</td>
-                            <td class="p-4 text-center space-x-2">
+                            <td class="p-4 text-center space-x-2 whitespace-nowrap">
                                 <button onclick="app.viewPastResult('${item.id}')" class="text-gold-400 hover:text-gold-300 text-xs border border-gold-400/30 px-2 py-1 rounded transition">ดูข้อมูล</button>
+                                <button onclick="app.printHistoryItem('${item.id}')" class="text-gray-300 hover:text-white text-xs border border-gray-600 px-2 py-1 rounded transition">พิมพ์</button>
                                 <button onclick="app.deleteHistoryItem('${item.id}')" class="text-red-400 hover:text-red-300 text-xs border border-red-400/30 px-2 py-1 rounded transition">ลบ</button>
                             </td>
                         `;
@@ -1104,6 +1158,30 @@
                     this.state.currentResult = data;
                     this.renderResult(data);
                     this.navigate('result');
+                }
+            },
+
+            printHistoryItem(id) {
+                const data = this.state.history.find(item => item.id === id);
+                if(data) {
+                    this.state.currentResult = data;
+                    this.renderResult(data);
+                    this.navigate('result');
+                    
+                    Swal.fire({
+                        title: 'เตรียมแสดงตัวอย่างก่อนพิมพ์...',
+                        text: 'ระบบกำลังจัดหน้า A4 กรุณารอสักครู่',
+                        allowOutsideClick: false,
+                        background: '#141414',
+                        color: '#D4AF37',
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    // รอ 1 วินาที ให้กราฟและข้อมูลอัปเดตเสร็จสมบูรณ์ ก่อนเรียกคำสั่งพิมพ์หน้าต่าง
+                    setTimeout(() => {
+                        Swal.close();
+                        window.print();
+                    }, 1200);
                 }
             },
 

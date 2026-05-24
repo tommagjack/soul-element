@@ -91,7 +91,17 @@
 
         @page { size: A4; margin: 12mm; }
         @media print {
-            body { background: white !important; color: black !important; }
+            html, body, main { 
+                background: white !important; 
+                color: black !important; 
+                display: block !important;
+                height: auto !important;
+                min-height: auto !important;
+                overflow: visible !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .fade-in { animation: none !important; opacity: 1 !important; transform: none !important; }
             .no-print { display: none !important; }
             .glass-panel { 
                 background: white !important; 
@@ -1169,19 +1179,22 @@
                     this.navigate('result');
                     
                     Swal.fire({
-                        title: 'เตรียมแสดงตัวอย่างก่อนพิมพ์...',
-                        text: 'ระบบกำลังจัดหน้า A4 กรุณารอสักครู่',
+                        title: 'เตรียมหน้าสำหรับพิมพ์...',
+                        text: 'ระบบกำลังจัดหน้ากระดาษ A4',
                         allowOutsideClick: false,
                         background: '#141414',
                         color: '#D4AF37',
                         didOpen: () => { Swal.showLoading(); }
                     });
 
-                    // รอ 1 วินาที ให้กราฟและข้อมูลอัปเดตเสร็จสมบูรณ์ ก่อนเรียกคำสั่งพิมพ์หน้าต่าง
+                    // รอ 0.8 วินาที ให้กราฟเรนเดอร์เสร็จ
                     setTimeout(() => {
                         Swal.close();
-                        window.print();
-                    }, 1200);
+                        // สำคัญ: ต้องรอให้ SweetAlert ปิดสนิท (ลบ class overflow:hidden ออกจากหน้าเว็บ) ก่อนเรียกหน้าพิมพ์
+                        setTimeout(() => {
+                            window.print();
+                        }, 500);
+                    }, 800);
                 }
             },
 

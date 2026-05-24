@@ -89,36 +89,101 @@
 
         .percent-bar-segment { height: 10px; transition: width 1s ease-in-out; }
 
-        @page { size: A4; margin: 12mm; }
+        /* --- เริ่มต้นการแก้ไข CSS สำหรับการพิมพ์ (Print Mode) --- */
+        @page { 
+            size: A4; 
+            margin: 10mm; /* ปรับลดระยะขอบเพื่อให้มีพื้นที่เนื้อหามากขึ้น */
+        }
         @media print {
-            html, body, main { 
+            html, body {
                 background: white !important; 
-                color: black !important; 
-                display: block !important;
-                height: auto !important;
-                min-height: auto !important;
+                color: black !important;
+                /* ยกเลิกการซ่อนเนื้อหาและกำหนดความสูง */
                 overflow: visible !important;
+                height: auto !important;
+                width: auto !important;
+            }
+            
+            main {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .no-print, nav, #countdown-container, #btn-back, #btn-print, #btn-qr { 
+                display: none !important; 
+            }
+
+            /* ลบแอนิเมชันออกให้หมด ป้องกันหน้าขาว */
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .fade-in { 
+                opacity: 1 !important; 
+                transform: none !important; 
+            }
+
+            /* ปรับแต่งส่วนต่างๆ ให้เหมาะสมกับการพิมพ์และอ่านง่ายขึ้น */
+            .glass-panel { 
+                background: white !important; 
+                border: 1px solid #e5e7eb !important; 
+                box-shadow: none !important; 
+                /* สำคัญมาก: ป้องกันไม่ให้ส่วนประกอบหลักโดนตัดขาดครึ่งหน้า */
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                margin-bottom: 1.5rem !important;
+                padding: 1rem !important; /* ลด padding เพื่อประหยัดพื้นที่ */
+            }
+
+            /* การจัดการสีพื้นหลังและสีอักษร (บังคับให้พิมพ์สี) */
+            body, .glass-panel, div, span, p, h2, h3, h4, h5 {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .fade-in { animation: none !important; opacity: 1 !important; transform: none !important; }
-            .no-print { display: none !important; }
-            .glass-panel { 
-                background: white !important; 
-                border: 1px solid #ddd !important; 
-                box-shadow: none !important; 
-                break-inside: avoid;
-                page-break-inside: avoid;
-                margin-bottom: 1.5rem !important;
+
+            .text-white, .text-gray-300, .text-gray-400, .text-gray-500 { color: #111827 !important; }
+            .bg-dark-800, .bg-dark-900, .bg-dark-700 { background-color: #f3f4f6 !important; border-color: #d1d5db !important; }
+            .gold-gradient-text { background: none !important; color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
+            
+            /* ตารางปาจื้อ */
+            .bazi-grid { background: #f9fafb !important; border: 1px solid #9ca3af !important; break-inside: avoid !important; }
+            .bazi-header { background: #e5e7eb !important; color: #111827 !important; border-bottom: 1px solid #9ca3af !important;}
+            .bazi-cell { background: white !important; padding: 0.5rem !important;}
+
+            /* กราฟ Radar (ApexCharts) */
+            #chart-container { 
+                break-inside: avoid !important; 
+                page-break-inside: avoid !important;
+                margin-bottom: 1rem !important;
+                /* ไม่ invert สีเพื่อให้คล้ายกับหน้าจอ */
+                filter: none !important;
             }
-            .text-white, .text-gray-300, .text-gray-400, .text-gray-500 { color: #333 !important; }
-            .bg-dark-800, .bg-dark-900, .bg-dark-700 { background-color: #f9fafb !important; border-color: #e5e7eb !important; }
-            .gold-gradient-text { background: none !important; color: black !important; -webkit-text-fill-color: black !important; }
-            .bazi-grid { background: #f3f4f6 !important; border: 1px solid #d1d5db !important; break-inside: avoid; }
-            .bazi-header { background: #e5e7eb !important; color: #000 !important; border-bottom: 1px solid #d1d5db !important;}
-            .bazi-cell { background: white !important; }
-            #chart-container { filter: invert(1) hue-rotate(180deg); break-inside: avoid; }
+
+            /* บังคับเปิด Accordion ทุกอันตอนพิมพ์ */
+            [id^="content-dom-"], [id^="content-mis-"], #content-table-explain {
+                display: block !important;
+            }
+            [id^="icon-dom-"], [id^="icon-mis-"], #icon-table-explain {
+                display: none !important;
+            }
+
+            /* ปรับแต่งปุ่ม Accordion ให้เหมือน Header ในโหมดพิมพ์ */
+            button[onclick^="app.toggleAccordion"] {
+                pointer-events: none !important;
+                border: 1px solid #d1d5db !important;
+                color: #111827 !important;
+            }
+
+            /* ช่วยให้ข้อความเล็กๆ อ่านง่ายขึ้น */
+            .text-xs { font-size: 10pt !important; line-height: 1.4 !important; }
+            .text-sm { font-size: 11pt !important; line-height: 1.5 !important; }
+            .text-lg { font-size: 14pt !important; }
+            .text-xl { font-size: 16pt !important; }
         }
+        /* --- สิ้นสุดการแก้ไข CSS --- */
+
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -222,9 +287,12 @@
                 <p class="text-gray-400">คุณ <span id="res-name" class="font-bold text-white"></span></p>
                 <p class="text-sm text-gray-500 mt-1"><span id="res-dob"></span> | <span id="res-time"></span> | <span id="res-gender"></span></p>
                 
-                <div id="countdown-container" class="mt-4 inline-flex items-center justify-center bg-dark-800/80 border border-gold-500/30 rounded-full px-5 py-2 text-sm text-gold-300 shadow-lg no-print">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>ข้อมูลหมดอายุใน: <span id="countdown-timer" class="font-bold ml-1 text-white tracking-wider w-[200px] inline-block text-left">กำลังคำนวณ...</span></span>
+                <div id="countdown-container" class="mt-5 inline-flex items-center justify-center bg-dark-800/90 border border-gold-500/30 rounded-full px-6 py-2.5 shadow-lg no-print">
+                    <svg class="w-6 h-6 mr-3 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div class="flex flex-col text-left">
+                        <span class="text-[11px] text-gray-400 mb-0.5">ข้อมูลหมดอายุใน:</span>
+                        <span id="countdown-timer" class="font-bold text-white text-sm tracking-wide">กำลังคำนวณ...</span>
+                    </div>
                 </div>
             </div>
 
@@ -920,8 +988,6 @@
 
             // สร้างเนื้อหาอธิบายตารางปาจื้อแบบ Dynamic
             generateTableExplanation(data) {
-                const dmEleData = typeof window !== 'undefined' ? window.dmEleData : null;
-                
                 const dm = data.analysis.dayMaster;
                 const dmEle = this.elements[dm.element];
                 const dmMap = this.stemsMap[dm.char];

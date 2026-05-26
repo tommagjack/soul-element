@@ -21,9 +21,8 @@
                 extend: {
                     fontFamily: { sans: ['Noto Sans Thai', 'sans-serif'] },
                     colors: {
-                        gold: { 300: '#E6C981', 400: '#D4AF37', 500: '#AA8529', 600: '#8A6A1C' },
-                        dark: { 900: '#0A0A0A', 800: '#141414', 700: '#1F1F1F', 600: '#2E2E2E' },
-                        element: { wood: '#22c55e', fire: '#ef4444', earth: '#8b4513', metal: '#D4AF37', water: '#3b82f6' }
+                        chinese: { 50: '#fef2f2', 100: '#fee2e2', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d' },
+                        element: { wood: '#22c55e', fire: '#ef4444', earth: '#8b4513', metal: '#c29b27', water: '#3b82f6' }
                     }
                 }
             }
@@ -32,85 +31,73 @@
 
     <style>
         body {
-            background-color: #0A0A0A;
-            color: #E5E5E5;
+            background-color: #f9fafb;
+            color: #111827;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.03), transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(185, 28, 28, 0.03), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(185, 28, 28, 0.02), transparent 25%);
             background-attachment: fixed;
         }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #2E2E2E; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+        ::-webkit-scrollbar-track { background: #f3f4f6; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
 
         .glass-panel {
-            background: rgba(20, 20, 20, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
-        .gold-gradient-text {
-            background: linear-gradient(to right, #E6C981, #D4AF37, #E6C981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .theme-title-text {
+            color: #b91c1c;
         }
         .input-luxury {
-            background: #141414;
-            border: 1px solid #2E2E2E;
-            color: white;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #111827;
             transition: all 0.3s ease;
         }
-        .input-luxury:focus { border-color: #D4AF37; outline: none; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-        .btn-gold {
-            background: linear-gradient(135deg, #D4AF37, #AA8529);
-            color: #0A0A0A; font-weight: 600; transition: all 0.3s ease; border: 1px solid #E6C981;
+        .input-luxury:focus { border-color: #b91c1c; outline: none; box-shadow: 0 0 0 1px #b91c1c; }
+        .input-luxury::placeholder { color: #9ca3af; }
+        
+        .btn-primary {
+            background: #b91c1c;
+            color: #ffffff; font-weight: 600; transition: all 0.3s ease; border: 1px solid #991b1b;
         }
-        .btn-gold:hover { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); transform: translateY(-1px); }
+        .btn-primary:hover { background: #991b1b; box-shadow: 0 4px 12px rgba(185, 28, 28, 0.2); transform: translateY(-1px); }
+        
         .btn-outline {
-            background: transparent; color: #D4AF37; border: 1px solid #D4AF37; transition: all 0.3s ease;
+            background: transparent; color: #b91c1c; border: 1px solid #b91c1c; transition: all 0.3s ease; font-weight: 600;
         }
-        .btn-outline:hover { background: rgba(212, 175, 55, 0.1); }
+        .btn-outline:hover { background: #fef2f2; }
 
+        /* ตารางปาจื้อ สไตล์จีน (แดง-ขาว) */
         .bazi-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
-            background: rgba(212, 175, 55, 0.3); border: 1px solid #D4AF37; border-radius: 8px; overflow: hidden;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+            background: #b91c1c; border: 1px solid #b91c1c; border-radius: 8px; overflow: hidden;
         }
-        .bazi-cell { background: #141414; padding: 1rem; text-align: center; }
-        .bazi-header { background: #1F1F1F; color: #D4AF37; font-weight: 600; padding: 0.75rem; text-align: center; }
+        .bazi-cell { background: #ffffff; padding: 1rem; text-align: center; color: #111827; }
+        .bazi-header { background: #b91c1c; color: #ffffff; font-weight: 600; padding: 0.75rem; text-align: center; }
         
         .element-wood { color: #22c55e; } 
         .element-fire { color: #ef4444; } 
         .element-earth { color: #8b4513; } 
-        .element-metal { color: #D4AF37; } 
+        .element-metal { color: #c29b27; } 
         .element-water { color: #3b82f6; } 
 
         .percent-bar-segment { height: 10px; transition: width 1s ease-in-out; }
 
         @page { size: A4; margin: 10mm; }
         @media print {
-            html, body {
-                background: white !important; 
-                color: black !important;
-                overflow: visible !important;
-                height: auto !important;
-                width: auto !important;
-            }
+            html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; width: auto !important; }
             main { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .no-print, nav, #countdown-container, #btn-back, #btn-print, #btn-qr, #btn-share { display: none !important; }
             * { animation: none !important; transition: none !important; }
             .fade-in { opacity: 1 !important; transform: none !important; }
-            .glass-panel { 
-                background: white !important; border: 1px solid #e5e7eb !important; box-shadow: none !important; 
-                break-inside: avoid !important; page-break-inside: avoid !important; margin-bottom: 1.5rem !important; padding: 1rem !important; 
-            }
+            .glass-panel { background: white !important; border: 1px solid #e5e7eb !important; box-shadow: none !important; break-inside: avoid !important; page-break-inside: avoid !important; margin-bottom: 1.5rem !important; padding: 1rem !important; }
             body, .glass-panel, div, span, p, h2, h3, h4, h5 { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .text-white, .text-gray-300, .text-gray-400, .text-gray-500 { color: #111827 !important; }
-            .bg-dark-800, .bg-dark-900, .bg-dark-700 { background-color: #f3f4f6 !important; border-color: #d1d5db !important; }
-            .gold-gradient-text { background: none !important; color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
-            .bazi-grid { background: #f9fafb !important; border: 1px solid #9ca3af !important; break-inside: avoid !important; }
-            .bazi-header { background: #e5e7eb !important; color: #111827 !important; border-bottom: 1px solid #9ca3af !important;}
-            .bazi-cell { background: white !important; padding: 0.5rem !important;}
+            .bazi-grid { break-inside: avoid !important; }
+            .bazi-cell { padding: 0.5rem !important;}
             #chart-container { break-inside: avoid !important; page-break-inside: avoid !important; margin-bottom: 1rem !important; filter: none !important; }
             [id^="content-dom-"], [id^="content-mis-"], #content-table-explain { display: block !important; }
             [id^="icon-dom-"], [id^="icon-mis-"], #icon-table-explain { display: none !important; }
@@ -127,18 +114,18 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans">
 
-    <nav class="glass-panel sticky top-0 z-50 border-b-0 border-t-0 border-l-0 border-r-0 border-b border-gold-400/30 no-print">
+    <nav class="bg-white sticky top-0 z-50 border-b border-red-200 shadow-sm no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="app.navigate('home')">
-                    <svg class="h-8 w-8 text-gold-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="h-8 w-8 text-chinese-700 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                     </svg>
-                    <span class="font-bold text-xl tracking-wider gold-gradient-text">Soul Element</span>
+                    <span class="font-bold text-xl tracking-wider theme-title-text">Soul Element</span>
                 </div>
                 <div class="flex space-x-4">
-                    <button onclick="app.navigate('home')" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">หน้าแรก</button>
-                    <button onclick="app.navigate('history')" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">ประวัติ</button>
+                    <button onclick="app.navigate('home')" class="text-gray-600 hover:text-chinese-700 px-3 py-2 rounded-md text-sm font-bold transition-colors">หน้าแรก</button>
+                    <button onclick="app.navigate('history')" class="text-gray-600 hover:text-chinese-700 px-3 py-2 rounded-md text-sm font-bold transition-colors">ประวัติ</button>
                 </div>
             </div>
         </div>
@@ -149,40 +136,40 @@
         <!-- ==================== VIEW: HOME (INPUT FORM) ==================== -->
         <div id="view-home" class="view-section fade-in">
             <div class="text-center mb-10">
-                <h1 class="text-3xl md:text-4xl font-bold gold-gradient-text mb-2">บันทึกดวงชะตา (BaZi)</h1>
-                <p class="text-gray-400 text-sm">ระบบผูกดวงจีนและวิเคราะห์ธาตุสำหรับ Master</p>
+                <h1 class="text-3xl md:text-4xl font-bold theme-title-text mb-2">บันทึกดวงชะตา (BaZi)</h1>
+                <p class="text-gray-600 text-sm">ระบบผูกดวงจีนและวิเคราะห์ธาตุสำหรับ Master</p>
             </div>
 
             <div class="glass-panel rounded-2xl p-6 md:p-8">
                 <form id="bazi-form" onsubmit="app.calculateBaZi(event)">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gold-300 mb-1">ชื่อ - นามสกุล ลูกค้า *</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อ - นามสกุล ลูกค้า *</label>
                             <input type="text" id="customer-name" required class="input-luxury w-full rounded-lg px-4 py-2.5" placeholder="กรอกชื่อลูกค้า">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gold-300 mb-1">วัน/เดือน/ปี เกิด (สากล) *</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">วัน/เดือน/ปี เกิด (สากล) *</label>
                             <input type="date" id="birth-date" required class="input-luxury w-full rounded-lg px-4 py-2.5">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gold-300 mb-1 flex justify-between items-center">
+                            <label class="block text-sm font-bold text-gray-700 mb-1 flex justify-between items-center">
                                 <span>เวลาเกิด</span>
                                 <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="unknown-time" onchange="app.toggleTimeInput()" class="accent-gold-500 w-4 h-4">
-                                    <span class="text-xs text-gray-400">ไม่ทราบเวลาเกิด</span>
+                                    <input type="checkbox" id="unknown-time" onchange="app.toggleTimeInput()" class="accent-chinese-600 w-4 h-4">
+                                    <span class="text-xs text-gray-500 font-normal">ไม่ทราบเวลาเกิด</span>
                                 </div>
                             </label>
                             <input type="time" id="birth-time" class="input-luxury w-full rounded-lg px-4 py-2.5">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gold-300 mb-1">เพศ *</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">เพศ *</label>
                             <select id="gender" required class="input-luxury w-full rounded-lg px-4 py-2.5">
                                 <option value="M">ชาย</option>
                                 <option value="F">หญิง</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gold-300 mb-1">Tag (ตัวเลือก)</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Tag (ตัวเลือก)</label>
                             <input type="text" id="tags" class="input-luxury w-full rounded-lg px-4 py-2.5" placeholder="เช่น VIP, ดูเรื่องงาน">
                         </div>
                     </div>
@@ -190,7 +177,7 @@
                         <button type="button" onclick="app.resetForm()" class="btn-outline px-6 py-3 rounded-lg w-full md:w-1/3 flex items-center justify-center text-lg">
                             ล้างข้อมูล
                         </button>
-                        <button type="submit" class="btn-gold px-6 py-3 rounded-lg w-full md:w-2/3 flex items-center justify-center text-lg">
+                        <button type="submit" class="btn-primary px-6 py-3 rounded-lg w-full md:w-2/3 flex items-center justify-center text-lg">
                             คำนวณผลปาจื้อ
                         </button>
                     </div>
@@ -202,7 +189,7 @@
         <div id="view-result" class="view-section hidden fade-in">
             
             <div class="flex justify-between items-center mb-6 no-print">
-                <button onclick="app.navigate('home')" class="text-gray-400 hover:text-white flex items-center" id="btn-back">
+                <button onclick="app.navigate('home')" class="text-gray-600 hover:text-chinese-700 font-bold flex items-center" id="btn-back">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     กลับ
                 </button>
@@ -211,7 +198,7 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                         พิมพ์ A4
                     </button>
-                    <button onclick="app.generateReceiptQR()" class="btn-gold px-4 py-2 rounded-lg text-sm flex items-center" id="btn-qr">
+                    <button onclick="app.generateReceiptQR()" class="btn-primary px-4 py-2 rounded-lg text-sm flex items-center" id="btn-qr">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
                         สร้าง QR Code
                     </button>
@@ -224,15 +211,15 @@
 
             <!-- SECTION: Header -->
             <div class="text-center mb-8 relative">
-                <h2 class="text-3xl font-bold gold-gradient-text mb-2">ข้อมูลปาจื้อของฉัน</h2>
-                <p class="text-gray-400">คุณ <span id="res-name" class="font-bold text-white"></span></p>
+                <h2 class="text-3xl font-bold theme-title-text mb-2">ข้อมูลปาจื้อของฉัน</h2>
+                <p class="text-gray-600">คุณ <span id="res-name" class="font-bold text-gray-900"></span></p>
                 <p class="text-sm text-gray-500 mt-1"><span id="res-dob"></span> | <span id="res-time"></span> | <span id="res-gender"></span></p>
                 
-                <div id="countdown-container" class="mt-6 inline-block bg-black/40 border border-gold-500/50 rounded-xl px-6 py-3 shadow-[0_0_15px_rgba(197,165,85,0.2)] no-print">
-                    <div class="text-[10px] uppercase tracking-widest text-gold-400 mb-1 font-semibold">
+                <div id="countdown-container" class="mt-6 inline-block bg-red-50 border border-red-200 rounded-xl px-6 py-3 shadow-sm no-print">
+                    <div class="text-[10px] uppercase tracking-widest text-chinese-700 mb-1 font-semibold">
                         ข้อมูลนี้จะใช้งานได้อีก
                     </div>
-                    <div id="countdown-timer" class="font-mono text-2xl font-bold text-white tracking-wider">
+                    <div id="countdown-timer" class="font-mono text-2xl font-bold text-chinese-800 tracking-wider">
                         กำลังคำนวณ...
                     </div>
                 </div>
@@ -240,7 +227,7 @@
 
             <!-- SECTION: BaZi Table -->
             <div class="glass-panel rounded-2xl p-6 mb-8">
-                <h3 class="text-lg font-bold text-gold-400 mb-4 border-l-4 border-gold-400 pl-3">ตารางปาจื้อ (สี่เสาหลัก)</h3>
+                <h3 class="text-lg font-bold text-chinese-700 mb-4 border-l-4 border-chinese-700 pl-3">ตารางปาจื้อ (สี่เสาหลัก)</h3>
                 <div class="bazi-grid">
                     <div class="bazi-header rounded-tl-lg">時 ชั่วโมง</div>
                     <div class="bazi-header">日 วัน</div>
@@ -259,15 +246,15 @@
                 </div>
 
                 <!-- SECTION: Table Explanation (Accordion) -->
-                <div class="mt-6 border-t border-dark-600 pt-4">
-                    <button onclick="app.toggleAccordion('table-explain')" class="w-full flex items-center justify-between text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors bg-dark-800/50 p-3 rounded-lg border border-dark-600 hover:border-gold-500/50 focus:outline-none">
+                <div class="mt-6 border-t border-gray-200 pt-4">
+                    <button onclick="app.toggleAccordion('table-explain')" class="w-full flex items-center justify-between text-sm font-bold text-chinese-700 hover:text-chinese-800 transition-colors bg-gray-50 p-3 rounded-lg border border-gray-200 hover:border-red-300 focus:outline-none">
                         <span class="flex items-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             คำอธิบายตารางปาจื้อ (ฉบับย่อ)
                         </span>
                         <svg id="icon-table-explain" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div id="content-table-explain" class="hidden mt-4 text-sm text-gray-300">
+                    <div id="content-table-explain" class="hidden mt-4 text-sm text-gray-700">
                         <!-- Injected via JS -->
                     </div>
                 </div>
@@ -276,23 +263,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <!-- SECTION: Day Master -->
                 <div class="glass-panel rounded-2xl p-6">
-                    <h3 class="text-lg font-bold text-gold-400 mb-4 border-l-4 border-gold-400 pl-3">ธาตุประจำตัว (Day Master)</h3>
+                    <h3 class="text-lg font-bold text-chinese-700 mb-4 border-l-4 border-chinese-700 pl-3">ธาตุประจำตัว (Day Master)</h3>
                     <div class="flex flex-col items-center mb-6">
-                        <div class="w-20 h-20 rounded-full border-2 border-gold-500 flex items-center justify-center text-3xl mb-3 bg-dark-800" id="dm-icon"></div>
-                        <h4 class="text-2xl font-bold text-white mb-1" id="dm-title"></h4>
-                        <p class="text-gray-300 text-sm text-center leading-relaxed" id="dm-desc"></p>
+                        <div class="w-20 h-20 rounded-full border-2 border-chinese-500 flex items-center justify-center text-3xl mb-3 bg-white shadow-sm" id="dm-icon"></div>
+                        <h4 class="text-2xl font-bold text-gray-900 mb-1" id="dm-title"></h4>
+                        <p class="text-gray-600 text-sm text-center leading-relaxed" id="dm-desc"></p>
                     </div>
                     
-                    <div class="bg-dark-800 print-bg-dark rounded-xl p-4 mb-4">
-                        <h5 class="font-bold text-green-400 mb-1 text-sm">จุดแข็ง</h5>
-                        <p class="text-gray-300 text-sm" id="dm-strength"></p>
+                    <div class="bg-red-50 rounded-xl p-4 mb-4 border border-red-100">
+                        <h5 class="font-bold text-green-600 mb-1 text-sm">จุดแข็ง</h5>
+                        <p class="text-gray-700 text-sm" id="dm-strength"></p>
                     </div>
-                    <div class="bg-dark-800 print-bg-dark rounded-xl p-4 mb-4">
-                        <h5 class="font-bold text-red-400 mb-1 text-sm">จุดอ่อน</h5>
-                        <p class="text-gray-300 text-sm" id="dm-weakness"></p>
+                    <div class="bg-red-50 rounded-xl p-4 mb-4 border border-red-100">
+                        <h5 class="font-bold text-red-600 mb-1 text-sm">จุดอ่อน</h5>
+                        <p class="text-gray-700 text-sm" id="dm-weakness"></p>
                     </div>
 
-                    <h5 class="font-bold text-white mb-2 text-sm">บุคลิกภาพ</h5>
+                    <h5 class="font-bold text-gray-900 mb-2 text-sm">บุคลิกภาพ</h5>
                     <div class="grid grid-cols-2 gap-2" id="dm-traits">
                         <!-- Traits injected here -->
                     </div>
@@ -302,27 +289,25 @@
                 <div class="flex flex-col gap-6">
                     <!-- Lucky Colors -->
                     <div class="glass-panel rounded-2xl p-6">
-                        <h3 class="text-lg font-bold text-gold-400 mb-4 border-l-4 border-gold-400 pl-3">สีเสริมธาตุประจำตัว</h3>
+                        <h3 class="text-lg font-bold text-chinese-700 mb-4 border-l-4 border-chinese-700 pl-3">สีเสริมธาตุประจำตัว</h3>
                         <div class="flex justify-around items-center" id="lucky-colors-ui">
                             <!-- Colors injected here -->
                         </div>
                     </div>
 
                     <!-- Favorable -->
-                    <div class="glass-panel rounded-2xl p-0 overflow-hidden border border-green-500/30 relative">
-                        <div class="absolute inset-0 bg-green-500/10 pointer-events-none"></div>
-                        <div class="p-6 relative z-10">
-                            <h4 class="font-bold text-white mb-2">เข้ากันได้ดีกับ <span id="favorable-title" class="text-green-400"></span></h4>
-                            <p class="text-sm text-gray-300 leading-relaxed" id="favorable-desc"></p>
+                    <div class="glass-panel rounded-2xl p-0 overflow-hidden border border-green-200 bg-green-50">
+                        <div class="p-6">
+                            <h4 class="font-bold text-gray-900 mb-2">เข้ากันได้ดีกับ <span id="favorable-title" class="text-green-600"></span></h4>
+                            <p class="text-sm text-gray-700 leading-relaxed" id="favorable-desc"></p>
                         </div>
                     </div>
 
                     <!-- Unfavorable -->
-                    <div class="glass-panel rounded-2xl p-0 overflow-hidden border border-red-500/30 relative">
-                        <div class="absolute inset-0 bg-red-500/10 pointer-events-none"></div>
-                        <div class="p-6 relative z-10">
-                            <h4 class="font-bold text-white mb-2">เข้ากันไม่ได้กับ <span id="unfavorable-title" class="text-red-400"></span></h4>
-                            <p class="text-sm text-gray-300 leading-relaxed" id="unfavorable-desc"></p>
+                    <div class="glass-panel rounded-2xl p-0 overflow-hidden border border-red-200 bg-red-50">
+                        <div class="p-6">
+                            <h4 class="font-bold text-gray-900 mb-2">เข้ากันไม่ได้กับ <span id="unfavorable-title" class="text-red-600"></span></h4>
+                            <p class="text-sm text-gray-700 leading-relaxed" id="unfavorable-desc"></p>
                         </div>
                     </div>
                 </div>
@@ -330,41 +315,36 @@
 
             <!-- SECTION: Chart & Elements -->
             <div class="glass-panel rounded-2xl p-6 mb-8 text-center">
-                <h3 class="text-xl font-bold gold-gradient-text mb-2">ดวงชะตาของฉัน</h3>
-                <p class="text-sm text-gray-400 mb-6">เปอร์เซ็นต์ธาตุตามวันเวลาเกิด</p>
+                <h3 class="text-xl font-bold theme-title-text mb-2">ดวงชะตาของฉัน</h3>
+                <p class="text-sm text-gray-500 mb-6">เปอร์เซ็นต์ธาตุตามวันเวลาเกิด</p>
                 
                 <div id="chart-container" class="flex justify-center mb-4 min-h-[300px]"></div>
                 
                 <!-- Percent Bar -->
-                <div class="w-full flex rounded-full overflow-hidden h-3 mb-2" id="element-percent-bar"></div>
-                <div class="flex text-xs text-gray-400 w-full" id="element-percent-labels"></div>
+                <div class="w-full flex rounded-full overflow-hidden h-3 mb-2 bg-gray-200" id="element-percent-bar"></div>
+                <div class="flex text-xs text-gray-600 w-full" id="element-percent-labels"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <!-- SECTION: Dominant Element -->
-                <div class="glass-panel rounded-2xl p-6 border border-gold-500/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gold-500/5 pointer-events-none"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center mb-4">
-                            <h3 class="text-lg font-bold text-white mr-2">ธาตุหลักของคุณ</h3>
-                            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div id="dominant-elements-list" class="w-full">
-                            <!-- Injected by JS -->
-                        </div>
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-chinese-500">
+                    <div class="flex items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-900 mr-2">ธาตุหลักของคุณ</h3>
+                        <svg class="w-5 h-5 text-chinese-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div id="dominant-elements-list" class="w-full">
+                        <!-- Injected by JS -->
                     </div>
                 </div>
 
                 <!-- SECTION: Weakest/Missing Element -->
-                <div class="glass-panel rounded-2xl p-6 border border-gray-600/50 relative overflow-hidden">
-                    <div class="relative z-10">
-                        <div class="flex items-center mb-4">
-                            <h3 class="text-lg font-bold text-white mr-2">ธาตุที่ควรเสริม</h3>
-                            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div id="missing-elements-list" class="w-full">
-                            <!-- Injected by JS -->
-                        </div>
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-gray-400">
+                    <div class="flex items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-900 mr-2">ธาตุที่ควรเสริม</h3>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div id="missing-elements-list" class="w-full">
+                        <!-- Injected by JS -->
                     </div>
                 </div>
             </div>
@@ -374,7 +354,7 @@
         <!-- ==================== VIEW: HISTORY ==================== -->
         <div id="view-history" class="view-section hidden fade-in">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold gold-gradient-text mb-4 md:mb-0">ประวัติผลปาจื้อ</h2>
+                <h2 class="text-3xl font-bold theme-title-text mb-4 md:mb-0">ประวัติผลปาจื้อ</h2>
                 
                 <div class="flex space-x-2 w-full md:w-auto">
                     <input type="text" id="search-input" placeholder="ค้นหาชื่อ..." class="input-luxury rounded-lg px-4 py-2 w-full md:w-64">
@@ -385,41 +365,41 @@
             </div>
 
             <!-- เปลี่ยนตารางประวัติเป็นสีขาว พื้นสว่าง ฟอนต์ดำ -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-gray-100 text-gray-700 text-sm border-b border-gray-300">
+                            <tr class="bg-gray-100 text-gray-700 text-sm border-b border-gray-200">
                                 <th class="p-4 w-16 text-center font-bold">ลำดับ</th>
                                 <th class="p-4 font-bold">วันที่ดูดวง</th>
                                 <th class="p-4 font-bold">ชื่อลูกค้า</th>
                                 <th class="p-4 text-center font-bold">จัดการ</th>
                             </tr>
                         </thead>
-                        <tbody id="history-table-body" class="text-sm text-gray-800 divide-y divide-gray-200">
+                        <tbody id="history-table-body" class="text-sm text-gray-800 divide-y divide-gray-100">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
                 </div>
-                <div class="bg-gray-50 p-3 flex justify-between items-center text-xs text-gray-600 border-t border-gray-200">
+                <div class="bg-gray-50 p-4 flex justify-between items-center text-xs text-gray-600 border-t border-gray-200">
                     <span id="history-count"></span>
                     <div class="flex space-x-2" id="pagination-controls">
                         <!-- Pagination JS -->
                     </div>
                 </div>
             </div>
-            <p class="text-xs text-gray-500 text-center mt-4">* ระบบจะลบข้อมูลประวัติอัตโนมัติเมื่อครบ 7 วัน</p>
+            <p class="text-xs text-gray-400 text-center mt-4">* ระบบจะลบข้อมูลประวัติอัตโนมัติเมื่อครบ 7 วัน</p>
         </div>
 
     </main>
 
     <!-- QR Receipt Modal (Hidden) -->
-    <div id="qr-modal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] hidden flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 no-print">
+    <div id="qr-modal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] hidden flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 no-print">
         <div class="bg-white p-4 rounded-xl shadow-2xl flex flex-col items-center transform scale-95 transition-transform duration-300 w-[300px]" id="qr-modal-content">
-            <h3 class="text-xl font-bold text-black mb-1">Soul Element</h3>
+            <h3 class="text-xl font-bold text-chinese-700 mb-1">Soul Element</h3>
             <p class="text-xs text-gray-600 mb-4 text-center border-b pb-2 w-full">ดวงชะตาปาจื้อ</p>
             
-            <div class="w-full text-left text-sm text-black mb-4 space-y-1">
+            <div class="w-full text-left text-sm text-gray-900 mb-4 space-y-1">
                 <p><strong>ชื่อ:</strong> <span id="pr-name"></span></p>
                 <p><strong>เกิด:</strong> <span id="pr-dob"></span></p>
                 <p><strong>เวลา:</strong> <span id="pr-time"></span></p>
@@ -432,8 +412,8 @@
         </div>
         
         <div class="flex space-x-4 mt-6">
-            <button onclick="app.closeQRCode()" class="bg-gray-700 text-white px-6 py-2 rounded-full font-bold">ปิด</button>
-            <button onclick="app.downloadReceiptImage()" class="bg-gold-500 text-black px-6 py-2 rounded-full font-bold">บันทึกรูปภาพ (58mm)</button>
+            <button onclick="app.closeQRCode()" class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-full font-bold transition">ปิด</button>
+            <button onclick="app.downloadReceiptImage()" class="bg-chinese-700 hover:bg-chinese-800 text-white px-6 py-2 rounded-full font-bold transition">บันทึกรูปภาพ (58mm)</button>
         </div>
     </div>
     
@@ -462,7 +442,7 @@
                 itemsPerPage: 20
             },
 
-            // ข้อมูลธาตุและสี/อัญมณี (ปรับสีให้ตรงธาตุ ไม้เขียว, ไฟแดง, ดินน้ำตาล, ทองทอง, น้ำฟ้า)
+            // ข้อมูลธาตุและสี/อัญมณี
             elements: {
                 'Wood': { th: 'ไม้', colorClass: 'element-wood', hex: '#22c55e', icon: '🌳', 
                           colors: [{n:'เขียวขี้ม้า', h:'#4b5320'}, {n:'เขียวมิ้นต์', h:'#98FF98'}, {n:'เขียวมะนาว', h:'#32CD32'}], 
@@ -491,7 +471,7 @@
                           domDesc: 'ผู้ที่มีธาตุดินเด่น เปรียบเสมือนผืนดินที่มั่นคง แข็งแกร่ง มีความอดทนสูง เป็นคนรักษาสัญญา น่าเชื่อถือ แต่ไม่ชอบการเปลี่ยนแปลงและอาจจะดื้อเงียบ',
                           domAdvice: 'ควรกล้าที่จะลองสิ่งใหม่ๆ และรับการเปลี่ยนแปลงบ้าง การออกจาก Comfort Zone จะนำพาสิ่งดีๆ มาให้',
                           misDesc: 'คุณมีธาตุดินน้อย อาจทำให้ขาดความมั่นคงในจิตใจ โลเล เปลี่ยนใจง่าย ขาดความหนักแน่นในการตัดสินใจเรื่องสำคัญ' },
-                'Metal': { th: 'ทอง', colorClass: 'element-metal', hex: '#D4AF37', icon: '⚔️',
+                'Metal': { th: 'ทอง', colorClass: 'element-metal', hex: '#c29b27', icon: '⚔️',
                           colors: [{n:'เงิน', h:'#C0C0C0'}, {n:'ขาว', h:'#FFFFFF'}, {n:'เทา', h:'#808080'}], 
                           luckyColors: [{n:'ขาว', h:'#ffffff'}, {n:'เงิน', h:'#d1d5db'}, {n:'เหลือง', h:'#facc15'}],
                           gem: 'เพชร (Diamond)',
@@ -589,7 +569,6 @@
                 }
             },
 
-            // ลบข้อมูลที่เก่ากว่า 7 วัน (ตาม Requirement)
             cleanupOldHistory() {
                 const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
                 if (localData) {
@@ -640,9 +619,9 @@
                 const gender = document.getElementById('gender').value;
                 const tags = document.getElementById('tags').value;
 
-                if (!dob) return Swal.fire({ icon: 'warning', title: 'โปรดระบุวันเกิด', background: '#141414', color: '#fff' });
+                if (!dob) return Swal.fire({ icon: 'warning', title: 'โปรดระบุวันเกิด' });
 
-                Swal.fire({ title: 'กำลังคำนวณ...', allowOutsideClick: false, background: '#141414', color: '#D4AF37', didOpen: () => Swal.showLoading() });
+                Swal.fire({ title: 'กำลังคำนวณ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
                 setTimeout(() => {
                     const dateObj = new Date(dob);
@@ -683,7 +662,7 @@
                     };
 
                     this.state.currentResult = result;
-                    this.saveData(result); // Save immediately
+                    this.saveData(result);
                     this.renderResult(result);
                     Swal.close();
                     this.navigate('result');
@@ -706,12 +685,12 @@
                         const polarityTh = dataObj.polarity === '+' ? 'หยาง' : 'หยิน';
                         el.innerHTML = `
                             <div class="flex justify-center mb-2">
-                                <div class="w-7 h-7 rounded-full flex items-center justify-center bg-dark-800 border" style="border-color: ${eleData.hex}">
-                                    <span class="text-xs">${eleData.icon}</span>
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 shadow-sm" style="border-color: ${eleData.hex}">
+                                    <span class="text-sm">${eleData.icon}</span>
                                 </div>
                             </div>
-                            <div class="text-lg md:text-xl font-bold mb-1 ${eleData.colorClass}">${dataObj.char} ${dataObj.pinyin}</div>
-                            <div class="text-[10px] text-gray-400">ธาตุ${eleData.th}${polarityTh}</div>
+                            <div class="text-lg md:text-xl font-bold mb-1 text-gray-900">${dataObj.char} ${dataObj.pinyin}</div>
+                            <div class="text-[11px] text-gray-500 font-medium">ธาตุ${eleData.th}${polarityTh}</div>
                         `;
                     } else el.innerHTML = `-`;
                 };
@@ -723,14 +702,14 @@
                 const dmEle = this.elements[data.bazi.day.stem.element];
                 const dmPolTh = data.bazi.day.stem.polarity === '+' ? 'หยาง' : 'หยิน';
                 document.getElementById('stem-day').innerHTML = `
-                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold-500 text-black text-[10px] px-2 rounded-full font-bold shadow-md z-10">ดิถี</div>
-                    <div class="flex justify-center mb-2 mt-1">
-                        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-dark-800 border" style="border-color: ${dmEle.hex}">
-                            <span class="text-xs">${dmEle.icon}</span>
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-chinese-700 text-white text-[10px] px-3 py-0.5 rounded-full font-bold shadow-md z-10">ดิถี (วัน)</div>
+                    <div class="flex justify-center mb-2 mt-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 shadow-sm" style="border-color: ${dmEle.hex}">
+                            <span class="text-sm">${dmEle.icon}</span>
                         </div>
                     </div>
-                    <div class="text-lg md:text-xl font-bold mb-1 ${dmEle.colorClass}">${data.bazi.day.stem.char} ${data.bazi.day.stem.pinyin}</div>
-                    <div class="text-[10px] text-gray-400">ธาตุ${dmEle.th}${dmPolTh}</div>
+                    <div class="text-lg md:text-xl font-bold mb-1 text-gray-900">${data.bazi.day.stem.char} ${data.bazi.day.stem.pinyin}</div>
+                    <div class="text-[11px] text-gray-500 font-medium">ธาตุ${dmEle.th}${dmPolTh}</div>
                 `;
 
                 // --- สร้างคำอธิบายตารางปาจื้อแบบ Dynamic ---
@@ -751,9 +730,9 @@
 
                 // Traits
                 const traitsDiv = document.getElementById('dm-traits');
-                traitsDiv.innerHTML = dm.traits.map(t => `<div class="bg-dark-700 text-center py-1.5 rounded text-xs text-gray-300 border border-dark-600">${t}</div>`).join('');
+                traitsDiv.innerHTML = dm.traits.map(t => `<div class="bg-gray-100 text-gray-700 text-center py-1.5 rounded text-xs border border-gray-200">${t}</div>`).join('');
 
-                // Relationships (Cycles with Yin/Yang Combination and Clashes)
+                // Relationships
                 const getCombo = (el, pol) => {
                     if(el==='Wood' && pol==='+') return {e:'Earth', p:'-', th:'ดินหยิน'};
                     if(el==='Wood' && pol==='-') return {e:'Metal', p:'+', th:'ทองหยาง'};
@@ -783,19 +762,17 @@
                 document.getElementById('unfavorable-title').innerText = `ธาตุ${unfav.th}`;
                 document.getElementById('unfavorable-desc').innerText = `พลังงานธาตุ${unfav.th} เป็นธาตุที่เข้ามาพิฆาตหรือควบคุมธาตุ${dmEle.th}ของคุณ อาจทำให้เกิดความกดดัน อึดอัด หรือมีความคิดเห็นที่ไม่ตรงกันบ่อยครั้ง`;
 
-                // Lucky Colors (จากธาตุประจำตัว Day Master)
+                // Lucky Colors
                 const colorUi = document.getElementById('lucky-colors-ui');
                 colorUi.innerHTML = dmEle.luckyColors.map(c => `
                     <div class="flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full mb-2 shadow-lg border border-gray-600" style="background-color: ${c.h}"></div>
-                        <span class="text-xs text-gray-400">${c.n}</span>
+                        <div class="w-10 h-10 rounded-full mb-2 shadow-sm border border-gray-300" style="background-color: ${c.h}"></div>
+                        <span class="text-xs text-gray-700 font-medium">${c.n}</span>
                     </div>
                 `).join('');
 
                 // Analysis Charts & Percents
                 const order = ['Wood', 'Fire', 'Earth', 'Metal', 'Water'];
-                
-                // สำหรับ Radar chart ส่งค่าเปอร์เซ็นต์ตามลำดับคงที่
                 const orderedPercents = order.map(elName => data.analysis.elements.find(e => e.name === elName) || {name:elName, value:0});
 
                 // Radar
@@ -804,119 +781,111 @@
                     series: [{ name: 'พลังงาน (%)', data: orderedPercents.map(e => e.value) }],
                     chart: { type: 'radar', height: 320, toolbar: { show: false }, background: 'transparent' },
                     labels: orderedPercents.map(e => `ธาตุ${e.th}`),
-                    stroke: { width: 2, colors: ['#D4AF37'] },
-                    fill: { opacity: 0.3, colors: ['#D4AF37'] },
-                    markers: { size: 4, colors: ['#fff'], strokeColors: '#D4AF37' },
+                    stroke: { width: 2, colors: ['#b91c1c'] },
+                    fill: { opacity: 0.2, colors: ['#b91c1c'] },
+                    markers: { size: 4, colors: ['#fff'], strokeColors: '#b91c1c' },
                     yaxis: { show: false, min: 0 },
-                    // ปรับสีในเรดาร์ตามธาตุจริง
-                    xaxis: { labels: { style: { colors: ['#22c55e', '#ef4444', '#8b4513', '#D4AF37', '#3b82f6'], fontSize: '13px', fontFamily: 'Noto Sans Thai', fontWeight: 'bold' } } },
-                    plotOptions: { radar: { polygons: { strokeColors: '#333', connectorColors: '#333' } } },
-                    theme: { mode: 'dark' }
+                    xaxis: { labels: { style: { colors: ['#22c55e', '#ef4444', '#8b4513', '#c29b27', '#3b82f6'], fontSize: '13px', fontFamily: 'Noto Sans Thai', fontWeight: 'bold' } } },
+                    plotOptions: { radar: { polygons: { strokeColors: '#e5e7eb', connectorColors: '#e5e7eb' } } },
+                    theme: { mode: 'light' }
                 };
                 this.state.chartInstance = new ApexCharts(document.querySelector("#chart-container"), options);
                 this.state.chartInstance.render();
 
-                // สำหรับการแสดงธาตุหลักและธาตุที่ควรเสริม รวมถึง Percent Bar ให้เรียงลำดับจากมากไปน้อย
                 const sortedByValue = [...orderedPercents].sort((a,b) => b.value - a.value);
 
-                // Percent Bar (จัดเรียงจากมากไปน้อย ตามเปอร์เซ็นต์จริง ไม่ฟิกขนาดกล่อง)
+                // Percent Bar
                 const pBar = document.getElementById('element-percent-bar');
                 const pLabels = document.getElementById('element-percent-labels');
                 pBar.innerHTML = ''; pLabels.innerHTML = '';
-                
-                // เปลี่ยน class ให้ flex ไม่แยกห่างกันเท่าๆ กัน (ลบ justify-between หรือใช้โครงสร้างใหม่)
-                pLabels.className = "flex text-xs text-gray-400 w-full"; 
+                pLabels.className = "flex text-xs text-gray-700 w-full"; 
 
                 sortedByValue.forEach(e => {
                     const eData = this.elements[e.name];
                     if(e.value > 0) {
                         pBar.innerHTML += `<div class="percent-bar-segment" style="width: ${e.value}%; background-color: ${eData.hex}"></div>`;
-                        // กำหนดความกว้างของป้ายกำกับให้เปอร์เซ็นต์ตรงกับแท่งกราฟด้านบน
                         pLabels.innerHTML += `
-                            <div class="text-center relative" style="width: ${e.value}%;">
+                            <div class="text-center relative pt-1" style="width: ${e.value}%;">
                                 <div class="font-bold text-[10px] md:text-sm" style="color:${eData.hex}">${e.value}%</div>
-                                <div class="text-[9px] md:text-xs">${eData.th}</div>
+                                <div class="text-[9px] md:text-xs text-gray-500">${eData.th}</div>
                             </div>
                         `;
                     }
                 });
 
-                // แยกธาตุหลัก (>= 20%) และ ธาตุที่ควรเสริม (< 20%)
+                // Dom & Missing Elements
                 const dominantElements = sortedByValue.filter(e => e.value >= 20);
                 const missingElements = sortedByValue.filter(e => e.value < 20);
 
-                // Render ธาตุหลัก
                 const domContainer = document.getElementById('dominant-elements-list');
                 domContainer.innerHTML = dominantElements.map((el, index) => {
                     const elData = this.elements[el.name];
-                    const headerStyle = `background-color: ${elData.hex}; color: #0A0A0A;`;
-                    // เปิดแท็บแรกไว้เสมอ ส่วนแท็บอื่นซ่อน
+                    const headerStyle = `background-color: ${elData.hex}; color: #ffffff;`;
                     const isHidden = index === 0 ? '' : 'hidden';
                     const rotate = index === 0 ? 'rotate(180deg)' : 'rotate(0deg)';
                     
                     return `
                     <div class="mb-4">
-                        <button onclick="app.toggleAccordion('dom-${el.name}')" class="w-full px-4 py-3 rounded-lg font-bold flex justify-between items-center transition-transform active:scale-[0.98]" style="${headerStyle}">
-                            <span class="flex items-center"><span class="mr-2">${elData.icon}</span> ธาตุ${elData.th}</span>
+                        <button onclick="app.toggleAccordion('dom-${el.name}')" class="w-full px-4 py-3 rounded-lg font-bold flex justify-between items-center transition-transform active:scale-[0.98] shadow-sm" style="${headerStyle}">
+                            <span class="flex items-center"><span class="mr-2 text-xl">${elData.icon}</span> ธาตุ${elData.th}</span>
                             <div class="flex items-center">
-                                <span class="mr-2">${el.value}%</span>
+                                <span class="mr-2 text-lg">${el.value}%</span>
                                 <svg id="icon-dom-${el.name}" style="transform: ${rotate}; transition: transform 0.3s;" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
                         </button>
-                        <div id="content-dom-${el.name}" class="${isHidden} p-4 bg-dark-800/80 mt-2 rounded-lg border border-dark-600">
-                            <h4 class="font-bold text-gold-300 mb-1 text-sm">ลักษณะนิสัย</h4>
-                            <p class="text-xs text-gray-300 leading-relaxed mb-4">${elData.domDesc}</p>
-                            <h4 class="font-bold text-gold-300 mb-1 text-sm">คำแนะนำ</h4>
-                            <p class="text-xs text-gray-300 leading-relaxed">${elData.domAdvice}</p>
+                        <div id="content-dom-${el.name}" class="${isHidden} p-5 bg-gray-50 mt-2 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-gray-900 mb-1 text-sm">ลักษณะนิสัย</h4>
+                            <p class="text-sm text-gray-700 leading-relaxed mb-4">${elData.domDesc}</p>
+                            <h4 class="font-bold text-gray-900 mb-1 text-sm">คำแนะนำ</h4>
+                            <p class="text-sm text-gray-700 leading-relaxed">${elData.domAdvice}</p>
                         </div>
                     </div>
                     `;
                 }).join('');
 
-                // Render ธาตุที่ควรเสริม
                 const misContainer = document.getElementById('missing-elements-list');
                 if (missingElements.length > 0) {
                     misContainer.innerHTML = missingElements.map((el, index) => {
                         const elData = this.elements[el.name];
-                        const headerStyle = `background-color: ${elData.hex}15; border: 1px solid ${elData.hex}; color: ${elData.hex};`;
+                        const headerStyle = `background-color: ${elData.hex}10; border: 1px solid ${elData.hex}; color: ${elData.hex};`;
                         const isHidden = index === 0 ? '' : 'hidden';
                         const rotate = index === 0 ? 'rotate(180deg)' : 'rotate(0deg)';
                         
                         const colorsHtml = elData.colors.map(c => `
                             <div class="flex flex-col items-center">
-                                <div class="w-8 h-8 rounded-full mb-1 border border-gray-600 shadow-sm" style="background-color: ${c.h}"></div>
-                                <span class="text-[10px] text-gray-400">${c.n}</span>
+                                <div class="w-8 h-8 rounded-full mb-1 border border-gray-300 shadow-sm" style="background-color: ${c.h}"></div>
+                                <span class="text-[10px] text-gray-600 font-medium">${c.n}</span>
                             </div>
                         `).join('');
 
                         return `
                         <div class="mb-4">
                             <button onclick="app.toggleAccordion('mis-${el.name}')" class="w-full px-4 py-3 rounded-lg font-bold flex justify-between items-center transition-transform active:scale-[0.98]" style="${headerStyle}">
-                                <span class="flex items-center"><span class="mr-2">${elData.icon}</span> ธาตุ${elData.th}</span>
+                                <span class="flex items-center"><span class="mr-2 text-xl">${elData.icon}</span> ธาตุ${elData.th}</span>
                                 <div class="flex items-center">
-                                    <span class="mr-2">${el.value}%</span>
+                                    <span class="mr-2 text-lg">${el.value}%</span>
                                     <svg id="icon-mis-${el.name}" style="transform: ${rotate}; transition: transform 0.3s;" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </div>
                             </button>
-                            <div id="content-mis-${el.name}" class="${isHidden} p-4 bg-dark-800/80 mt-2 rounded-lg border border-dark-600">
-                                <p class="text-xs text-gray-300 leading-relaxed mb-4">${elData.misDesc}</p>
+                            <div id="content-mis-${el.name}" class="${isHidden} p-5 bg-white mt-2 rounded-lg border border-gray-200 shadow-sm">
+                                <p class="text-sm text-gray-700 leading-relaxed mb-5">${elData.misDesc}</p>
                                 
-                                <div class="bg-dark-900/80 rounded-xl p-4 mb-4">
-                                    <h4 class="font-bold text-white mb-2 text-xs flex items-center"><span class="text-gold-400 mr-2">🏡</span> ฮวงจุ้ยบ้าน</h4>
-                                    <p class="text-[11px] text-gray-300 mb-4 leading-relaxed">${elData.fengShuiHome}</p>
+                                <div class="bg-gray-50 rounded-xl p-4 mb-4 border border-gray-100">
+                                    <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center"><span class="text-xl mr-2">🏡</span> ฮวงจุ้ยบ้าน</h4>
+                                    <p class="text-xs text-gray-700 mb-4 leading-relaxed">${elData.fengShuiHome}</p>
                                     
-                                    <h4 class="font-bold text-white mb-2 text-xs flex items-center"><span class="text-gold-400 mr-2">💼</span> ฮวงจุ้ยที่ทำงาน</h4>
-                                    <p class="text-[11px] text-gray-300 leading-relaxed">${elData.fengShuiWork}</p>
+                                    <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center"><span class="text-xl mr-2">💼</span> ฮวงจุ้ยที่ทำงาน</h4>
+                                    <p class="text-xs text-gray-700 leading-relaxed">${elData.fengShuiWork}</p>
                                 </div>
 
-                                <div class="bg-dark-900/80 rounded-xl p-4">
-                                    <h4 class="font-bold text-white mb-3 text-xs">การเสริมด้วยสี</h4>
-                                    <div class="flex justify-around items-center mb-4 border-b border-dark-600 pb-4">
+                                <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                                    <h4 class="font-bold text-gray-900 mb-4 text-sm text-center">การเสริมด้วยสี</h4>
+                                    <div class="flex justify-around items-center mb-5 border-b border-gray-200 pb-5">
                                         ${colorsHtml}
                                     </div>
                                     
-                                    <h4 class="font-bold text-white mb-2 text-xs">อัญมณีแนะนำ</h4>
-                                    <div class="text-center bg-dark-800 rounded p-2 text-gold-300 text-xs font-medium border border-dark-600">
+                                    <h4 class="font-bold text-gray-900 mb-2 text-sm text-center">อัญมณีแนะนำ</h4>
+                                    <div class="text-center bg-white rounded p-2 text-chinese-700 text-sm font-bold border border-chinese-200 shadow-sm">
                                         ${elData.gem}
                                     </div>
                                 </div>
@@ -925,14 +894,11 @@
                         `;
                     }).join('');
                 } else {
-                     misContainer.innerHTML = `<p class="text-sm text-gray-400 text-center py-4 bg-dark-800/50 rounded-lg border border-dark-600">ดวงชะตาของคุณมีธาตุค่อนข้างสมดุล (ไม่มีธาตุใดต่ำกว่า 20%)</p>`;
+                     misContainer.innerHTML = `<p class="text-sm text-gray-500 text-center py-6 bg-gray-50 rounded-lg border border-gray-200">ดวงชะตาของคุณมีธาตุค่อนข้างสมดุล (ไม่มีธาตุใดต่ำกว่า 20%)</p>`;
                 }
             },
 
-            // สร้างเนื้อหาอธิบายตารางปาจื้อแบบ Dynamic
             generateTableExplanation(data) {
-                const dmEleData = typeof window !== 'undefined' ? window.dmEleData : null;
-                
                 const dm = data.analysis.dayMaster;
                 const dmEle = this.elements[dm.element];
                 const dmMap = this.stemsMap[dm.char];
@@ -940,12 +906,10 @@
                 const dmTitle = `ธาตุ${dmEle.th}${polarityTh}`;
                 const dmArchetype = dmMap.text.split('(')[1].replace(')','');
 
-                // หาธาตุที่เด่นที่สุด
                 const sortedElements = [...data.analysis.elements].sort((a,b) => b.value - a.value);
                 const domEl = sortedElements[0];
-                const dominantEleData = this.elements[domEl.name]; // เปลี่ยนชื่อตัวแปรให้ชัดเจนเพื่อป้องกันบั๊ก
+                const dominantEleData = this.elements[domEl.name]; 
 
-                // ความสัมพันธ์ระหว่าง Day Master กับ ธาตุเด่น
                 const elementsArr = ['Wood', 'Fire', 'Earth', 'Metal', 'Water'];
                 const dmIdx = elementsArr.indexOf(dm.element);
                 const domIdx = elementsArr.indexOf(domEl.name);
@@ -976,43 +940,42 @@
                 const explanationHtml = `
                     <div class="space-y-6 pt-2 pb-4">
                         <div>
-                            <h4 class="text-gold-400 font-bold mb-2 text-base">จุดสำคัญที่สุด: Day Master</h4>
-                            <p class="text-sm">Day Master ของคุณคือ:</p>
-                            <div class="text-xl font-bold text-white my-2 ${dmEle.colorClass}">${dm.char} ${dm.pinyin} = "${dmTitle}" ${dmEle.icon}</div>
-                            <p class="text-xs text-gray-400 mb-3">เปรียบเหมือน: ${dmArchetype}</p>
-                            <div class="bg-dark-800 p-4 rounded-xl border border-dark-600">
-                                <h5 class="text-white font-bold text-sm mb-2">บุคลิกพื้นฐานของ "${dmTitle}"</h5>
-                                <ul class="grid grid-cols-2 gap-2 text-xs text-gray-300">
-                                    ${dmMap.traits.map(t => `<li class="flex items-center"><span class="text-gold-500 mr-2">•</span> ${t}</li>`).join('')}
+                            <h4 class="text-chinese-700 font-bold mb-2 text-base">จุดสำคัญที่สุด: Day Master</h4>
+                            <p class="text-sm text-gray-700">Day Master ของคุณคือ:</p>
+                            <div class="text-xl font-bold my-2 ${dmEle.colorClass}">${dm.char} ${dm.pinyin} = "${dmTitle}" <span class="text-2xl ml-1">${dmEle.icon}</span></div>
+                            <p class="text-xs text-gray-500 mb-3 font-medium">เปรียบเหมือน: ${dmArchetype}</p>
+                            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                                <h5 class="text-gray-900 font-bold text-sm mb-3 border-b border-gray-100 pb-2">บุคลิกพื้นฐานของ "${dmTitle}"</h5>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+                                    ${dmMap.traits.map(t => `<li class="flex items-center"><span class="text-chinese-500 mr-2 text-lg leading-none">•</span> ${t}</li>`).join('')}
                                 </ul>
                             </div>
                         </div>
 
                         <div>
-                            <h4 class="text-gold-400 font-bold mb-2 text-base">สิ่งที่เห็นชัดในดวงนี้</h4>
-                            <p class="mb-2 text-sm text-gray-300">ในดวงชะตามี <span class="${dominantEleData.colorClass} font-bold">"ธาตุ${dominantEleData.th}"</span> เยอะมาก (${domEl.value}%)</p>
-                            <div class="bg-dark-800 p-4 rounded-xl border border-dark-600">
-                                <p class="font-bold text-white mb-3 text-sm border-b border-dark-600 pb-2">อิทธิพลของ ${relationTxt}</p>
+                            <h4 class="text-chinese-700 font-bold mb-2 text-base">สิ่งที่เห็นชัดในดวงนี้</h4>
+                            <p class="mb-2 text-sm text-gray-700">ในดวงชะตามี <span class="${dominantEleData.colorClass} font-bold text-lg">"ธาตุ${dominantEleData.th}"</span> เยอะมาก (${domEl.value}%)</p>
+                            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                                <p class="font-bold text-gray-900 mb-3 text-sm border-b border-gray-100 pb-2">อิทธิพลของ ${relationTxt}</p>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <span class="text-green-400 font-bold text-xs">ข้อดี:</span>
-                                        <p class="text-xs text-gray-300 mt-1 leading-relaxed">${relationPros}</p>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-100">
+                                        <span class="text-green-700 font-bold text-sm block mb-1">ข้อดี:</span>
+                                        <p class="text-xs text-gray-700 leading-relaxed">${relationPros}</p>
                                     </div>
-                                    <div>
-                                        <span class="text-red-400 font-bold text-xs">ข้อควรระวัง:</span>
-                                        <p class="text-xs text-gray-300 mt-1 leading-relaxed">${relationCons}</p>
+                                    <div class="bg-red-50 p-3 rounded-lg border border-red-100">
+                                        <span class="text-red-700 font-bold text-sm block mb-1">ข้อควรระวัง:</span>
+                                        <p class="text-xs text-gray-700 leading-relaxed">${relationCons}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <h4 class="text-gold-400 font-bold mb-2 text-base">ภาพรวมดวงนี้แบบง่าย</h4>
-                            <div class="bg-dark-800 p-4 rounded-xl border border-gold-500/30 text-center relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gold-500/5 pointer-events-none"></div>
-                                <p class="font-bold text-gold-300 mb-2 relative z-10">"${dmArchetype} ที่ได้รับพลังจากธาตุ${dominantEleData.th}"</p>
-                                <p class="text-xs text-gray-300 relative z-10 leading-relaxed">
-                                    <span class="text-white font-bold">บทเรียนชีวิต:</span> 
+                            <h4 class="text-chinese-700 font-bold mb-2 text-base">ภาพรวมดวงนี้แบบง่าย</h4>
+                            <div class="bg-red-50 p-5 rounded-xl border border-red-200 text-center">
+                                <p class="font-bold text-chinese-800 text-lg mb-3">"${dmArchetype} ที่ได้รับพลังจากธาตุ${dominantEleData.th}"</p>
+                                <p class="text-sm text-gray-800 leading-relaxed bg-white p-3 rounded-lg border border-red-100 inline-block shadow-sm">
+                                    <span class="text-chinese-700 font-bold">บทเรียนชีวิต:</span><br>
                                     พยายามรักษาจุดเด่นของ ${dmTitle} ไว้ และระวังไม่ให้อิทธิพลของธาตุ${dominantEleData.th} ที่มีมากเกินไปมาสร้างความกดดันให้ชีวิต
                                 </p>
                             </div>
@@ -1020,7 +983,6 @@
                     </div>
                 `;
 
-                // รีเซ็ตสถานะการแสดงผล
                 const contentDiv = document.getElementById('content-table-explain');
                 const icon = document.getElementById('icon-table-explain');
                 contentDiv.innerHTML = explanationHtml;
@@ -1028,7 +990,6 @@
                 if(icon) icon.style.transform = 'rotate(0deg)';
             },
 
-            // ฟังก์ชันสำหรับเปิด/ปิด Accordion ของธาตุต่างๆ
             toggleAccordion(id) {
                 const content = document.getElementById(`content-${id}`);
                 const icon = document.getElementById(`icon-${id}`);
@@ -1055,7 +1016,7 @@
 
                     if (distance <= 0) {
                         clearInterval(this.state.countdownInterval);
-                        timerEl.innerHTML = "<span class='text-red-500'>หมดอายุแล้ว</span>";
+                        timerEl.innerHTML = "<span class='text-red-600'>หมดอายุแล้ว</span>";
                         return;
                     }
 
@@ -1064,10 +1025,9 @@
                     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // แก้ไขการจัดรูปแบบ string ให้นับถอยหลังดูสม่ำเสมอ
                     const formatNum = (num) => String(num).padStart(2, '0');
                     timerEl.innerText = `${days} วัน ${formatNum(hours)}:${formatNum(minutes)}:${formatNum(seconds)}`;
-                    timerEl.classList.remove('text-red-500');
+                    timerEl.classList.remove('text-red-600');
                 };
 
                 updateTimer();
@@ -1075,11 +1035,9 @@
             },
 
             saveData(resultData) {
-                // Add to history and save locally
                 this.state.history.unshift(resultData);
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.history));
                 
-                // Save to Google Sheet
                 try {
                     const formData = new URLSearchParams();
                     formData.append('action', 'saveResult');
@@ -1097,7 +1055,7 @@
 
             async loadHistory() {
                 const tbody = document.getElementById('history-table-body');
-                tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500"><svg class="w-8 h-8 mx-auto mb-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>กำลังโหลดข้อมูล...</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500"><svg class="w-8 h-8 mx-auto mb-2 animate-spin text-chinese-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>กำลังโหลดข้อมูล...</td></tr>`;
 
                 try {
                     const response = await fetch(`${GAS_API_URL}?action=getHistory`);
@@ -1132,7 +1090,6 @@
                 
                 document.getElementById('history-count').innerText = `พบ ${filtered.length} รายการ`;
 
-                // Pagination logic
                 const totalPages = Math.ceil(filtered.length / this.state.itemsPerPage);
                 if (this.state.currentPage > totalPages) this.state.currentPage = totalPages || 1;
                 
@@ -1146,7 +1103,6 @@
                         const actualIndex = start + index + 1;
                         const date = new Date(item.calcDate).toLocaleDateString('th-TH');
                         
-                        // ดึงข้อมูลธาตุประจำตัว
                         const dm = item.analysis.dayMaster;
                         const dmEleData = this.elements[dm.element];
                         const polarityTh = dm.polarity === '+' ? 'หยาง' : 'หยิน';
@@ -1154,30 +1110,29 @@
                         const dmColorHex = dmEleData.hex;
 
                         const tr = document.createElement('tr');
-                        tr.className = 'hover:bg-gray-50 transition-colors';
+                        tr.className = 'hover:bg-red-50 transition-colors';
                         tr.innerHTML = `
-                            <td class="p-4 text-center text-gray-500">${actualIndex}</td>
-                            <td class="p-4 whitespace-nowrap">${date}</td>
+                            <td class="p-4 text-center text-gray-600">${actualIndex}</td>
+                            <td class="p-4 whitespace-nowrap text-gray-800">${date}</td>
                             <td class="p-4 font-medium">
-                                <div class="text-gray-900">${item.customer.name}</div>
-                                <div class="text-xs font-bold mt-1" style="color: ${dmColorHex};">${dmText}</div>
+                                <div class="text-gray-900 font-bold text-base">${item.customer.name}</div>
+                                <div class="text-[11px] font-bold mt-0.5 bg-gray-100 inline-block px-2 py-0.5 rounded-md border border-gray-200" style="color: ${dmColorHex};">${dmEleData.icon} ${dmText}</div>
                             </td>
                             <td class="p-4 text-center space-x-2 whitespace-nowrap">
-                                <button onclick="app.viewPastResult('${item.id}')" class="text-blue-600 hover:text-blue-800 text-xs border border-blue-200 hover:border-blue-400 bg-white px-2 py-1 rounded transition shadow-sm">ดูข้อมูล</button>
-                                <button onclick="app.printHistoryItem('${item.id}')" class="text-gray-600 hover:text-gray-800 text-xs border border-gray-300 hover:border-gray-400 bg-white px-2 py-1 rounded transition shadow-sm">พิมพ์</button>
-                                <button onclick="app.deleteHistoryItem('${item.id}')" class="text-red-600 hover:text-red-800 text-xs border border-red-200 hover:border-red-400 bg-white px-2 py-1 rounded transition shadow-sm">ลบ</button>
+                                <button onclick="app.viewPastResult('${item.id}')" class="text-blue-600 hover:text-white text-xs border border-blue-600 hover:bg-blue-600 px-3 py-1.5 rounded transition shadow-sm font-semibold">ดูข้อมูล</button>
+                                <button onclick="app.printHistoryItem('${item.id}')" class="text-gray-700 hover:text-white text-xs border border-gray-500 hover:bg-gray-600 px-3 py-1.5 rounded transition shadow-sm font-semibold">พิมพ์</button>
+                                <button onclick="app.deleteHistoryItem('${item.id}')" class="text-chinese-600 hover:text-white text-xs border border-chinese-600 hover:bg-chinese-600 px-3 py-1.5 rounded transition shadow-sm font-semibold">ลบ</button>
                             </td>
                         `;
                         tbody.appendChild(tr);
                     });
                 }
 
-                // Render Pagination Controls
                 const pControls = document.getElementById('pagination-controls');
                 pControls.innerHTML = `
-                    <button onclick="app.changePage(-1)" class="px-2 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 shadow-sm ${this.state.currentPage===1?'opacity-50 cursor-not-allowed':''}" ${this.state.currentPage===1?'disabled':''}>ก่อนหน้า</button>
-                    <span class="px-2 py-1 font-medium">${this.state.currentPage} / ${totalPages || 1}</span>
-                    <button onclick="app.changePage(1)" class="px-2 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 shadow-sm ${this.state.currentPage===totalPages || totalPages===0?'opacity-50 cursor-not-allowed':''}" ${this.state.currentPage===totalPages || totalPages===0?'disabled':''}>ถัดไป</button>
+                    <button onclick="app.changePage(-1)" class="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 shadow-sm font-medium ${this.state.currentPage===1?'opacity-50 cursor-not-allowed':''}" ${this.state.currentPage===1?'disabled':''}>ก่อนหน้า</button>
+                    <span class="px-3 py-1 font-bold text-chinese-700">${this.state.currentPage} / ${totalPages || 1}</span>
+                    <button onclick="app.changePage(1)" class="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 shadow-sm font-medium ${this.state.currentPage===totalPages || totalPages===0?'opacity-50 cursor-not-allowed':''}" ${this.state.currentPage===totalPages || totalPages===0?'disabled':''}>ถัดไป</button>
                 `;
             },
             
@@ -1206,15 +1161,11 @@
                         title: 'เตรียมหน้าสำหรับพิมพ์...',
                         text: 'ระบบกำลังจัดหน้ากระดาษ A4',
                         allowOutsideClick: false,
-                        background: '#141414',
-                        color: '#D4AF37',
                         didOpen: () => { Swal.showLoading(); }
                     });
 
-                    // รอ 0.8 วินาที ให้กราฟเรนเดอร์เสร็จ
                     setTimeout(() => {
                         Swal.close();
-                        // สำคัญ: ต้องรอให้ SweetAlert ปิดสนิท (ลบ class overflow:hidden ออกจากหน้าเว็บ) ก่อนเรียกหน้าพิมพ์
                         setTimeout(() => {
                             window.print();
                         }, 500);
@@ -1225,16 +1176,14 @@
             deleteHistoryItem(id) {
                 Swal.fire({
                     title: 'ยืนยันการลบ?', text: "ข้อมูลนี้จะถูกลบออกจากประวัติและฐานข้อมูลถาวร", icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'ลบข้อมูล', cancelButtonText: 'ยกเลิก', background: '#141414', color: '#fff'
+                    showCancelButton: true, confirmButtonColor: '#b91c1c', cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'ลบข้อมูล', cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // 1. ลบจาก Local Storage และอัปเดตตาราง
                         this.state.history = this.state.history.filter(item => item.id !== id);
                         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.history));
                         this.renderHistoryTable();
 
-                        // 2. ส่ง Request ไปลบที่ Google Sheet
                         try {
                             const formData = new URLSearchParams();
                             formData.append('action', 'deleteResult');
@@ -1248,7 +1197,7 @@
                             
                             Swal.fire({
                                 toast: true, position: 'top-end', showConfirmButton: false, timer: 2000,
-                                icon: 'success', title: 'ลบข้อมูลเรียบร้อย', background: '#141414', color: '#D4AF37'
+                                icon: 'success', title: 'ลบข้อมูลเรียบร้อย'
                             });
                         } catch (error) {
                             console.error("Error deleting from GAS:", error);
@@ -1257,14 +1206,11 @@
                 })
             },
 
-            // --- ดึงข้อมูลสำหรับการแชร์ / QR Scan ---
             async fetchSharedResult(id) {
-                Swal.fire({ title: 'กำลังโหลดข้อมูลผลดวง...', background: '#141414', color: '#D4AF37', didOpen: () => { Swal.showLoading(); } });
+                Swal.fire({ title: 'กำลังโหลดข้อมูลผลดวง...', didOpen: () => { Swal.showLoading(); } });
                 
-                // ค้นหาในประวัติเครื่องตัวเองก่อน
                 let foundData = this.state.history.find(item => item.id === id);
                 
-                // ถ้าไม่เจอให้ดึงจาก Google Sheet
                 if (!foundData) {
                     try {
                         const response = await fetch(`${GAS_API_URL}?action=getResult&id=${id}`);
@@ -1281,7 +1227,6 @@
                     this.state.currentResult = foundData;
                     this.renderResult(foundData);
                     
-                    // ซ่อนเมนูนำทางและปุ่มที่ไม่จำเป็นสำหรับผู้ชม (โหมดอ่านอย่างเดียว)
                     const nav = document.querySelector('nav');
                     if(nav) nav.style.display = 'none';
                     const btnBack = document.getElementById('btn-back');
@@ -1296,14 +1241,13 @@
                     Swal.close();
                     this.navigate('result');
                 } else {
-                    Swal.fire({ icon: 'error', title: 'ไม่พบข้อมูล', text: 'ข้อมูลอาจหมดอายุหรือถูกลบไปแล้ว', background: '#141414', color: '#fff' })
+                    Swal.fire({ icon: 'error', title: 'ไม่พบข้อมูล', text: 'ข้อมูลอาจหมดอายุหรือถูกลบไปแล้ว' })
                     .then(() => {
-                        window.location.href = window.location.pathname; // กลับหน้าหลักหากไม่พบข้อมูล
+                        window.location.href = window.location.pathname;
                     });
                 }
             },
 
-            // --- 58mm QR Receipt Generator ---
             generateReceiptQR() {
                 const data = this.state.currentResult;
                 if(!data) return;
@@ -1312,7 +1256,6 @@
                 const content = document.getElementById('qr-modal-content');
                 const qrContainer = document.getElementById('qrcode');
                 
-                // Populate Modal UI (Preview)
                 document.getElementById('pr-name').innerText = data.customer.name;
                 const dDate = new Date(data.customer.dob);
                 document.getElementById('pr-dob').innerText = dDate.toLocaleDateString('th-TH');
@@ -1346,30 +1289,25 @@
                 const canvas = document.getElementById('receipt-canvas');
                 const ctx = canvas.getContext('2d');
                 
-                // Set canvas size for 58mm printer (approx 384px width)
                 const width = 384;
-                const height = 500; // arbitrary height, will adjust
+                const height = 500; 
                 canvas.width = width;
                 canvas.height = height;
 
-                // Fill background
                 ctx.fillStyle = "#FFFFFF";
                 ctx.fillRect(0, 0, width, height);
                 
                 ctx.fillStyle = "#000000";
                 ctx.textAlign = "center";
                 
-                // Title
                 ctx.font = "bold 24px 'Noto Sans Thai', sans-serif";
                 ctx.fillText("Soul Element", width/2, 40);
                 
                 ctx.font = "16px 'Noto Sans Thai', sans-serif";
                 ctx.fillText("ข้อมูลดวงชะตาปาจื้อ", width/2, 70);
                 
-                // Line
                 ctx.beginPath(); ctx.moveTo(20, 85); ctx.lineTo(width-20, 85); ctx.stroke();
 
-                // Details
                 ctx.textAlign = "left";
                 ctx.font = "18px 'Noto Sans Thai', sans-serif";
                 const startY = 120;
@@ -1384,22 +1322,18 @@
                 const polarity = data.analysis.dayMaster.polarity === '+' ? 'หยาง' : 'หยิน';
                 ctx.fillText(`ธาตุประจำตัว: ธาตุ${dmEle.th}${polarity}`, 30, startY + lh*3);
 
-                // ดึงภาพ QR Code จาก Canvas โดยตรง (แก้ปัญหาโหลดไม่ทันและอ่านไม่ออก)
                 const qrCanvasDOM = document.querySelector('#qrcode canvas');
                 if (qrCanvasDOM) {
                     const qrSize = 200;
                     const qrX = (width - qrSize) / 2;
                     const qrY = startY + lh*4;
                     
-                    // เติมขอบขาวรอบ QR Code (Quiet Zone) เพื่อให้กล้องจับโฟกัสง่ายขึ้น
                     ctx.fillStyle = "#FFFFFF";
                     ctx.fillRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
                     ctx.fillStyle = "#000000";
                     
-                    // วาดรูป QR
                     ctx.drawImage(qrCanvasDOM, qrX, qrY, qrSize, qrSize);
                         
-                    // Footer text
                     ctx.textAlign = "center";
                     ctx.font = "14px 'Noto Sans Thai', sans-serif";
                     ctx.fillText("สแกนเพื่อดูคำทำนายฉบับเต็ม", width/2, qrY + qrSize + 30);
@@ -1407,7 +1341,6 @@
                     ctx.fillStyle = "#666666";
                     ctx.fillText("ผลการทำนายมีอายุ 7 วัน", width/2, qrY + qrSize + 50);
 
-                    // Trigger download
                     const link = document.createElement('a');
                     link.download = `bazi_${data.customer.name}.png`;
                     link.href = canvas.toDataURL('image/png');
@@ -1422,7 +1355,6 @@
                 if (!data) return;
                 const shareUrl = `${APP_URL}?id=${data.id}`;
                 
-                // ถ้าระบบปฏิบัติการรองรับการแชร์โดยตรง (เช่น มือถือ) ให้เปิดหน้าต่างแชร์
                 if (navigator.share) {
                     navigator.share({
                         title: 'ข้อมูลปาจื้อของฉัน - Soul Element',
@@ -1433,7 +1365,6 @@
                         this.fallbackCopyText(shareUrl);
                     });
                 } else {
-                    // ถ้าไม่รองรับ ให้คัดลอกลงคลิปบอร์ดแทน
                     this.fallbackCopyText(shareUrl);
                 }
             },
@@ -1453,7 +1384,7 @@
                     if (successful) {
                         Swal.fire({
                             toast: true, position: 'top-end', showConfirmButton: false, timer: 2000,
-                            icon: 'success', title: 'คัดลอกลิงก์เรียบร้อยแล้ว', background: '#141414', color: '#D4AF37'
+                            icon: 'success', title: 'คัดลอกลิงก์เรียบร้อยแล้ว'
                         });
                     } else {
                         Swal.fire('ข้อผิดพลาด', 'ไม่สามารถคัดลอกลิงก์ได้', 'error');
